@@ -1,0 +1,728 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/page/favicon.png">
+  <link rel="icon" href="/img/page/favicon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="LQZHI">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="我们为什么要学习算法？  正所谓：数据结构 + 算法 &#x3D; 程序 。当我们了解了数据结构时，就必须要了解一下算法。因为数据结构和算法是分不开的。对于某一类型的数据结构，总会涉及到对数据的运算。而我们只有通过对所定义运算的研究，才能够清楚的理解数据结构的定义和作用。同样，也才能够将该数据类型的效果最大化。 算法联系着数据在计算过程中的组织方式，为了让数据在计算过程中得到最安全，最快，最有效">
+<meta property="og:type" content="article">
+<meta property="og:title" content="认识算法">
+<meta property="og:url" content="https://lqzhi.github.io/2020/01/31/%E8%AE%A4%E8%AF%86%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="MY-BLOG">
+<meta property="og:description" content="我们为什么要学习算法？  正所谓：数据结构 + 算法 &#x3D; 程序 。当我们了解了数据结构时，就必须要了解一下算法。因为数据结构和算法是分不开的。对于某一类型的数据结构，总会涉及到对数据的运算。而我们只有通过对所定义运算的研究，才能够清楚的理解数据结构的定义和作用。同样，也才能够将该数据类型的效果最大化。 算法联系着数据在计算过程中的组织方式，为了让数据在计算过程中得到最安全，最快，最有效">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E8%AE%A4%E8%AF%86%E7%AE%97%E6%B3%95/1.webp">
+<meta property="article:published_time" content="2020-01-31T11:11:26.000Z">
+<meta property="article:modified_time" content="2025-05-23T03:42:37.233Z">
+<meta property="article:author" content="LQZHI">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lqzhi.github.io/img/docs/%E8%AE%A4%E8%AF%86%E7%AE%97%E6%B3%95/1.webp">
+  
+  
+  
+  <title>认识算法 - MY-BLOG</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"lqzhi.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>闻言的笔记本</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/page/Page.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="认识算法"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-01-31 19:11" pubdate>
+          2020年1月31日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          17 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">认识算法</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2025年5月23日 中午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>我们为什么要学习算法？</p>
+</blockquote>
+<p>正所谓：数据结构 + 算法 &#x3D; 程序 。当我们了解了数据结构时，就必须要了解一下算法。因为数据结构和算法是分不开的。<strong>对于某一类型的数据结构，总会涉及到对数据的运算。而我们只有通过对所定义运算的研究，才能够清楚的理解数据结构的定义和作用。同样，也才能够将该数据类型的效果最大化。</strong></p>
+<p>算法联系着数据在计算过程中的组织方式，为了让数据在计算过程中得到最安全，最快，最有效的方法，我们常常需要设计算法。</p>
+<p><strong>学习算法，不仅能让自己思维能力更是一个台阶，也能在大数据和人工智能时代为自己打下坚实的基础，成为互联网行业的高端人才，而不是一直停留在低水平的体力编程层次。</strong></p>
+<p>编程不只是简简单单的实现功能。对于其性能，安全，存储空间大小等等都会有较高的要求。假设你遇到下面这种情况，你会怎么选择？</p>
+<p><img src="/img/docs/%E8%AE%A4%E8%AF%86%E7%AE%97%E6%B3%95/1.webp" srcset="/img/loading.gif" lazyload>  </p>
+<p>应用程序没有响应  </p>
+<p>如果是我，我将会结束进程，因为只有鬼才知道我需要等待多久。我相信，大部分人是没有这样的耐心的。这就是当处理数据时，数据量过大，程序一直在运算，需要耗费大量的时间在后台运算，导致了程序进程没有响应。或者就是内存泄漏和内存溢出等问题。而合适的算法通常就是解决这类问题。</p>
+<blockquote>
+<p>算法的定义以及特性</p>
+</blockquote>
+<p>**算法（Algorithm）：**为了解决某类问题而规定的一个有限长的操作序列。</p>
+<p>一个算法必须要满足以下五种重要特性。</p>
+<p><em><strong>（1）有穷性(Finiteness)：一个算法必须要要在执行有限次步骤后结束，且每一步都必须要在有限的有限的时间内完成。</strong></em></p>
+<p>（有穷性确定了算法是能够正常运转的，也保证其算法是由意义的的。试想一下，一个算法没有终点，那还有意义吗？）</p>
+<p><em><strong>（2）确定性(Definiteness)：对于每一种情况下所执行的操作，在其算法中都有确切的规定，不会产生二义性。</strong></em></p>
+<p>（确定性能够使得算法的执行者或阅读者都能明白其含义及如何执行。程序不是一个人的程序，而是团队的程序。确定性能够帮助自己或者他人能够很清楚的了解到该算法是怎么样的。当你的代码只有你一个人看的懂时，那其实已经是“烂代码”了。）</p>
+<p><em><strong>(3）可行性(Effectiveness)：算法中的所以操作都可以通过已经实现的基本操作运算执行有限次来实现。</strong></em></p>
+<p>（可行性规范了算法的运算，当你想要用一些其本身都没有的运算法则去进行运算，这是不可能的。就好比，你想要一个只会加减乘除的计算器去实现电脑，手机，卫星控制这样的功能一样。)</p>
+<p><em><strong>(4）输入(Input)：一个算法中有零个或多个输入。</strong></em></p>
+<p>（输入是用来刻画运算对象的初始情况的。零输入是指算法本身内部定义了初始情况。）</p>
+<p><em><strong>(5）输出(Output)：一个算法有一个或多个输出。</strong></em></p>
+<p>（输出是算法进行信息加工后所得出的结果。没有输出的算法是没有任何意义的。你没有输出，就相当于你没有结果，那么你定义的这个算法又有什么意义呢？）</p>
+<blockquote>
+<p>评价算法优劣的基本标准</p>
+</blockquote>
+<p>对于一个算法而言，其主要的还是要在能够解决问题的前提上看算法的优劣性。</p>
+<p><strong>一个算法的优劣性主要是从正确性，可读性，健壮性，高效性这四个方面来评价。</strong></p>
+<p>（1）**正确性：**在合理的数据输入下，能够在有限的运行时间内得到正确的结果。</p>
+<p>（2）**可读性：**一个优良的算法，首先应便于人们理解和相互交流，其次才是机器可执行性。因为可读性强的算法有助于人们对于算法的理解，而难懂的算法易于隐藏错误，且难于调试和修改。</p>
+<p>（3）**健壮性：**对不合理数据输入的反应能力和处理能力，也称为容错性。</p>
+<p>（4）**高效性：**高效性包括时间和空间两个方面。时间高效是指算法设计合理，执行效率高，可以用时间复杂度来衡量；而空间高效是指算法占用存储容量的合理，可以用空间复杂度来衡量。<strong>时间复杂度和空间复杂度是衡量算法的两个主要指标。</strong></p>
+<p>（这里暂时不讨论时间复杂度和空间复杂度。）</p>
+<blockquote>
+<p>衡量算法效率的方法</p>
+</blockquote>
+<p>衡量算法效率主要有两类：事后统计法和事前分析估算法。</p>
+<p><strong>事后统计算法：通过测试程序和测试数据对已经实现了的算法用计算机计时器的运行时间进行比较以及对所使用的内存空间大小进行比较。</strong></p>
+<p>（缺点：一是必须要把算法转化为可执行的程序，二是时空开销的测试结构依赖于计算机的软硬件等环境因素。）</p>
+<p><strong>事前分析估计法：在编制程序前，依靠统计方法对算法的时空开销进行估算。</strong></p>
+<p>（不考虑计算机的软硬件环境因素，影响算法时间代价的最主要因素是问题规模。【问题规模是算法求解问题输入量的多少。是问题大小的本质表示。】）</p>
+<blockquote>
+<p>扩展资料 ： 算法的分类</p>
+</blockquote>
+<p>算法可大致分为基本算法、数据结构的算法、数论与代数算法、计算几何的算法、图论的算法、动态规划以及数值分析、加密算法、排序算法、检索算法、随机化算法、并行算法，厄米变形模型，随机森林算法。</p>
+<p>算法可以宏泛的分为三类：</p>
+<p>一，有限的，确定性算法 这类算法在有限的一段时间内终止。他们可能要花很长时间来执行指定的任务，但仍将在一定的时间内终止。这类算法得出的结果常取决于输入值。</p>
+<p>二，有限的，非确定算法 这类算法在有限的时间内终止。然而，对于一个（或一些）给定的数值，算法的结果并不是唯一的或确定的。</p>
+<p>三，无限的算法 是那些由于没有定义终止定义条件，或定义的条件无法由输入的数据满足而不终止运行的算法。通常，无限算法的产生是由于未能确定的定义终止条件。</p>
+<blockquote>
+<p>总结</p>
+</blockquote>
+<p>算法对与程序而言是及其重要的。同时也是研究数据结构的重要途经。优良的算法能够给数据处理带来高效性，安全性等等。而我们，虽然说有可能日后用不上，但是学习算法能够提升自己的思维，培养自己的算法式思维。</p>
+<p>参考资料：<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%AE%97%E6%B3%95/209025?fr=aladdin#3">百度百科-算法</a></p>
+<p>                <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/4c7cb2cee7d5">为什么我们要学习算法</a></p>
+<p>                <a target="_blank" rel="noopener" href="https://detail.tmall.com/item.htm?spm=a230r.1.14.139.169d4de0CviPr5&id=589691975440&ns=1&abbucket=14">数据结构(C语言版)-严蔚敏</a></p>
+<p>（嘻嘻，我是在参考上面加上了自己的理解哦。如果有错误，请大佬指点。）</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%AE%97%E6%B3%95/" class="category-chain-item">算法</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%AE%97%E6%B3%95/" class="print-no-link">#算法</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>认识算法</div>
+      <div>https://lqzhi.github.io/2020/01/31/认识算法/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>LQZHI</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年1月31日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/02/01/%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%92%8C%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/" title="时间复杂度和空间复杂度">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">时间复杂度和空间复杂度</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/01/31/%E5%88%9D%E8%AF%86%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="初识数据结构">
+                        <span class="hidden-mobile">初识数据结构</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

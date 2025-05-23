@@ -1,0 +1,759 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/page/favicon.png">
+  <link rel="icon" href="/img/page/favicon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="LQZHI">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="线性表的顺序存储结构  &emsp;&emsp;线性表的顺序存储结构是通过一组连续的存储单元一次存储线性表的数据元素。其特点是，逻辑上相邻的数据元素，其物理次序也是相邻的。  数据的存储位置:   假设线性表的每个数据元素需要占用$x$个存储单元，并以所占的第一个单元的存储地址作为数据元素的存储起始位置。  则线性表中第x+1个数据元素的存储位置$LOC(x+1)$和第$x$个元素的存储位置$L">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线性表的顺序存储结构">
+<meta property="og:url" content="https://lqzhi.github.io/2020/02/03/%E7%BA%BF%E6%80%A7%E8%A1%A8%E7%9A%84%E9%A1%BA%E5%BA%8F%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:site_name" content="MY-BLOG">
+<meta property="og:description" content="线性表的顺序存储结构  &emsp;&emsp;线性表的顺序存储结构是通过一组连续的存储单元一次存储线性表的数据元素。其特点是，逻辑上相邻的数据元素，其物理次序也是相邻的。  数据的存储位置:   假设线性表的每个数据元素需要占用$x$个存储单元，并以所占的第一个单元的存储地址作为数据元素的存储起始位置。  则线性表中第x+1个数据元素的存储位置$LOC(x+1)$和第$x$个元素的存储位置$L">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E7%BA%BF%E6%80%A7%E8%A1%A8%E7%9A%84%E9%A1%BA%E5%BA%8F%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84/1.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E7%BA%BF%E6%80%A7%E8%A1%A8%E7%9A%84%E9%A1%BA%E5%BA%8F%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84/2.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E7%BA%BF%E6%80%A7%E8%A1%A8%E7%9A%84%E9%A1%BA%E5%BA%8F%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84/3.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E7%BA%BF%E6%80%A7%E8%A1%A8%E7%9A%84%E9%A1%BA%E5%BA%8F%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84/4.webp">
+<meta property="article:published_time" content="2020-02-03T13:22:30.000Z">
+<meta property="article:modified_time" content="2025-05-23T03:42:37.231Z">
+<meta property="article:author" content="LQZHI">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lqzhi.github.io/img/docs/%E7%BA%BF%E6%80%A7%E8%A1%A8%E7%9A%84%E9%A1%BA%E5%BA%8F%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84/1.webp">
+  
+  
+  
+  <title>线性表的顺序存储结构 - MY-BLOG</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"lqzhi.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>闻言的笔记本</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/page/Page.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="线性表的顺序存储结构"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-02-03 21:22" pubdate>
+          2020年2月3日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          23 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">线性表的顺序存储结构</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2025年5月23日 中午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>线性表的顺序存储结构</p>
+</blockquote>
+<p>&emsp;&emsp;线性表的顺序存储结构是通过一组连续的存储单元一次存储线性表的数据元素。其特点是，逻辑上相邻的数据元素，其物理次序也是相邻的。</p>
+<blockquote>
+<p>数据的存储位置:</p>
+</blockquote>
+<ol>
+<li><p>假设线性表的每个数据元素需要占用$x$个存储单元，并以所占的第一个单元的存储地址作为数据元素的存储起始位置。</p>
+</li>
+<li><p>则线性表中第x+1个数据元素的存储位置$LOC(x+1)$和第$x$个元素的存储位置$LOC(x)$之间满足该条件：$$LOC(x+1) &#x3D; LOC(x) +1$。</p>
+</li>
+<li><p>一般来说，线性表的第x个数据元素的存储位置:$LOC(x) &#x3D; LOC(x)+X(x-1)$。<br><img src="/img/docs/%E7%BA%BF%E6%80%A7%E8%A1%A8%E7%9A%84%E9%A1%BA%E5%BA%8F%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84/1.webp" srcset="/img/loading.gif" lazyload alt="1"></p>
+<blockquote>
+<p>顺序结构的优缺点</p>
+</blockquote>
+</li>
+</ol>
+<p>&emsp;&emsp;优点:拥有随机访问的能力，依靠下标访问数据的时间复杂度为常数阶。其存储位置也可以用一个简单，直观的公式来表示。<br>&emsp;&emsp;缺点:在做插入或删除操作时，需要移动大量数据。其时间复杂度较高。且有着其长度固定的静态特点。可能会导致内存空间浪费或内存空间不够。</p>
+<blockquote>
+<p>顺序存储结构类实现</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br></pre></td><td class="code"><pre><code class="hljs cpp">     <span class="hljs-comment">/**状态枚举定义:在记录七已经定义过了*/</span><br>     <span class="hljs-keyword">enum</span> <span class="hljs-title class_">Status</span>&#123;<br><br>        SUCCESS,FAIL,MEMORY_ALLOCATION_FAILED,ARRAY_OUT_OF_BOUNDS,OTHER_ERROR<br><br>        <span class="hljs-comment">/**枚举定义说明</span><br><span class="hljs-comment">         * SUCCESS:操作成功</span><br><span class="hljs-comment">         * FAIL:操作失败</span><br><span class="hljs-comment">         * MEMORY_ALLOCATION_FAILED:内存分配失败</span><br><span class="hljs-comment">         * ARRAY_OUT_OF_BOUNDS:数组下标越界</span><br><span class="hljs-comment">         * OTHER_ERROR:其它错误</span><br><span class="hljs-comment">         */</span><br>    &#125;; <br><span class="hljs-comment">/**</span><br><span class="hljs-comment">     *顺序存储结构类声明 </span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T,<span class="hljs-type">size_t</span> SIZE&gt;<br>    <span class="hljs-keyword">class</span> <span class="hljs-title class_">OrderList</span> : <span class="hljs-keyword">public</span> ListSelf&lt;T&gt;&#123;<span class="hljs-comment">//OrderList : 顺序表类 继承 线性表抽象类(ListSelf) </span><br>        <span class="hljs-keyword">private</span>:<br>            T * data;<span class="hljs-comment">//数据元素首地址</span><br>            <span class="hljs-type">size_t</span> length;<span class="hljs-comment">//存储长度</span><br>        <span class="hljs-keyword">protected</span>:<br>            <span class="hljs-comment">/**</span><br><span class="hljs-comment">             * 构造一个线性表,申请内存</span><br><span class="hljs-comment">             */</span><br>            <span class="hljs-function">Status <span class="hljs-title">init</span><span class="hljs-params">()</span></span>&#123;<br>                data = <span class="hljs-keyword">new</span> T[SIZE<span class="hljs-number">+1</span>];<span class="hljs-comment">//多申请一个空间,空余出第一个数据空间</span><br>                length = <span class="hljs-number">0</span>;<span class="hljs-comment">//长度为0</span><br>                <span class="hljs-keyword">if</span> (!data)&#123;<br>                    <span class="hljs-built_in">exit</span>(ERROR);<span class="hljs-comment">//如果内存申请失败，退出</span><br>                &#125;<br>                <span class="hljs-keyword">return</span> SUCCESS;<br>            &#125;<br><br>            <span class="hljs-comment">/**</span><br><span class="hljs-comment">             * 销毁线性表，回收内存。</span><br><span class="hljs-comment">             */</span> <br>            <span class="hljs-function">Status <span class="hljs-title">destroy</span><span class="hljs-params">()</span></span>&#123;<br>                <span class="hljs-keyword">if</span> (!data)&#123;<br>                    <span class="hljs-keyword">return</span> FAIL;<br>                &#125;<br>                <span class="hljs-keyword">delete</span> [] data;<br>                <span class="hljs-keyword">return</span> SUCCESS;<br>            &#125; <br><br>        <span class="hljs-keyword">public</span>:<br><br>            <span class="hljs-comment">/**</span><br><span class="hljs-comment">             * 默认的构造函数</span><br><span class="hljs-comment">             */</span> <br>            <span class="hljs-built_in">OrderList</span>()&#123;<br>                <span class="hljs-built_in">init</span>();<span class="hljs-comment">//调用init()函数，构建线性表</span><br>            &#125;<br><br>            <span class="hljs-comment">/**</span><br><span class="hljs-comment">             * 析构函数</span><br><span class="hljs-comment">             */</span><br>            ~<span class="hljs-built_in">OrderList</span>()&#123;<br>                <span class="hljs-built_in">destroy</span>();<span class="hljs-comment">//回收内存</span><br>            &#125;<br><br>            <span class="hljs-comment">/**</span><br><span class="hljs-comment">             * 在相应的位置上插入新的数据</span><br><span class="hljs-comment">             */</span> <br>            <span class="hljs-function">Status <span class="hljs-title">insert</span><span class="hljs-params">(T elem,<span class="hljs-type">size_t</span> index)</span></span>&#123;<br>                <span class="hljs-keyword">if</span> (length == SIZE)&#123; <span class="hljs-comment">//判断满</span><br>                    <span class="hljs-keyword">return</span> FULL;<span class="hljs-comment">//返回满</span><br>                &#125;<br>                <span class="hljs-keyword">if</span>(index &lt; <span class="hljs-number">1</span> || index &gt; length<span class="hljs-number">+1</span> )&#123;<span class="hljs-comment">//判断下标是否合法</span><br>                    <span class="hljs-keyword">return</span> ARRAY_OUT_OF_BOUNDS;<span class="hljs-comment">//返回下标越界错误</span><br>                &#125; <br>                <span class="hljs-type">size_t</span> i = <span class="hljs-number">0</span>;<br>                <span class="hljs-keyword">for</span> (i = length; i &gt;= index; --i)&#123;<span class="hljs-comment">//将数据往后面移动</span><br>                    data[i<span class="hljs-number">+1</span>] = data[i];<span class="hljs-comment">//将数据往后移动</span><br>                &#125;<br>                data[i<span class="hljs-number">+1</span>] = elem;<span class="hljs-comment">//插入数据</span><br>                ++length;<span class="hljs-comment">//长度增加</span><br>                <span class="hljs-keyword">return</span> SUCCESS; <br>            &#125;<br><br>            <span class="hljs-comment">/**</span><br><span class="hljs-comment">             * 在线性表的末尾插入新的数据 </span><br><span class="hljs-comment">             */</span><br>            <span class="hljs-function">Status <span class="hljs-title">insert</span><span class="hljs-params">(T elem)</span></span>&#123;<br>                <span class="hljs-keyword">if</span> (length == SIZE)&#123;<span class="hljs-comment">//判断是否空间是否为满</span><br>                    <span class="hljs-keyword">return</span> FULL;<br>                &#125;<br>                data[++length] = elem;<span class="hljs-comment">//放入数据</span><br>                <span class="hljs-keyword">return</span> SUCCESS;<br>            &#125;<br><br>            <span class="hljs-comment">/**</span><br><span class="hljs-comment">             * 取出线性表的数据元素</span><br><span class="hljs-comment">             */</span> <br>            <span class="hljs-function">T <span class="hljs-title">at</span><span class="hljs-params">(<span class="hljs-type">size_t</span> index)</span></span>&#123;<br>                <span class="hljs-keyword">if</span>(index &lt; <span class="hljs-number">1</span> || index &gt; length)&#123;<br>                    <span class="hljs-keyword">throw</span> std::<span class="hljs-built_in">out_of_range</span>(<span class="hljs-string">&quot;Array out of bounds&quot;</span>);<span class="hljs-comment">//返回下标越界错误</span><br>                &#125;<br>                <span class="hljs-keyword">return</span> data[index];<br>            &#125;<br><br>            <span class="hljs-comment">/**</span><br><span class="hljs-comment">             * 返回数据的索引下标</span><br><span class="hljs-comment">             */</span>  <br>            <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">local</span><span class="hljs-params">(T elem)</span> </span>&#123;<br>                <span class="hljs-comment">//安排哨兵</span><br>                data[<span class="hljs-number">0</span>] = elem;<br>                <span class="hljs-type">size_t</span> i= <span class="hljs-number">0</span>;<br>                <span class="hljs-keyword">for</span>(i = length;data[i]!=elem;--i);<span class="hljs-comment">//查询位置。数据相等就退出。</span><br>                <span class="hljs-keyword">if</span> (i == <span class="hljs-number">0</span>)&#123;<br>                    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<span class="hljs-comment">//查找失败，返回-1</span><br>                &#125;<br>                <span class="hljs-keyword">return</span> i;<span class="hljs-comment">//返回位置</span><br>            &#125;<br><br>            <span class="hljs-comment">/**</span><br><span class="hljs-comment">             * 修改指定位置的数据</span><br><span class="hljs-comment">             */</span> <br>            <span class="hljs-function">Status <span class="hljs-title">updateIndex</span><span class="hljs-params">(T newElem,<span class="hljs-type">size_t</span> index)</span></span>&#123;<br>                <span class="hljs-keyword">if</span>(index &lt; <span class="hljs-number">1</span> || index &gt; length )&#123;<br>                    <span class="hljs-keyword">return</span> ARRAY_OUT_OF_BOUNDS;<span class="hljs-comment">//返回数组下标错误</span><br>                &#125;<br>                data[index] = newElem;<span class="hljs-comment">//修改数据</span><br>                <span class="hljs-keyword">return</span> SUCCESS;<span class="hljs-comment">//返回成功</span><br>            &#125;<br><br>            <span class="hljs-comment">/**</span><br><span class="hljs-comment">             * 修改匹配的数据</span><br><span class="hljs-comment">             */</span><br>            <span class="hljs-function">Status <span class="hljs-title">update</span><span class="hljs-params">(T oldElem,T newElem)</span></span>&#123;<br>                <span class="hljs-type">int</span> index = <span class="hljs-built_in">local</span>(oldElem);<span class="hljs-comment">//先查询老数据的位置</span><br>                <span class="hljs-keyword">if</span> (index == <span class="hljs-number">-1</span>)&#123;<br>                    <span class="hljs-keyword">return</span> FAIL;<span class="hljs-comment">//如果没有查询到，就修改错误</span><br>                &#125;<br>                data[index] = newElem;<span class="hljs-comment">//更新数据 </span><br>                <span class="hljs-keyword">return</span> SUCCESS;<span class="hljs-comment">//返回成功</span><br>            &#125;<br><br>            <span class="hljs-comment">/**</span><br><span class="hljs-comment">             * 在相应的位置上删除数据</span><br><span class="hljs-comment">             */</span> <br>            <span class="hljs-function">Status <span class="hljs-title">removeIndex</span><span class="hljs-params">(<span class="hljs-type">size_t</span> index)</span></span>&#123;<br>                <span class="hljs-keyword">if</span>(index &lt; <span class="hljs-number">1</span> || index &gt; length )&#123;<br>                    <span class="hljs-keyword">return</span> ARRAY_OUT_OF_BOUNDS;<span class="hljs-comment">//返回数组下标错误</span><br>                &#125;<br>                <span class="hljs-keyword">for</span> (<span class="hljs-type">size_t</span> i = index; i &lt;= length; ++i)&#123;<span class="hljs-comment">//数据往前面移动，覆盖掉原来的数据</span><br>                    data[i] = data[i<span class="hljs-number">+1</span>];<br>                &#125;<br>                --length;<span class="hljs-comment">//长度减一</span><br>                <span class="hljs-keyword">return</span> SUCCESS;<br>            &#125;<br><br>            <span class="hljs-comment">/**</span><br><span class="hljs-comment">             * 移除线性表中相同的元素</span><br><span class="hljs-comment">             */</span> <br>            <span class="hljs-function">Status <span class="hljs-title">remove</span><span class="hljs-params">(T elem)</span></span>&#123;<br>                <span class="hljs-type">int</span> index = <span class="hljs-built_in">local</span>(elem);<span class="hljs-comment">//先查询数据的位置</span><br>                <span class="hljs-keyword">if</span>(index == <span class="hljs-number">-1</span>)&#123;<br>                    <span class="hljs-keyword">return</span> FAIL;<span class="hljs-comment">//没有数据就返回假</span><br>                &#125;<br>                <span class="hljs-keyword">for</span> (<span class="hljs-type">size_t</span> i = index; i &lt; length; ++i)&#123;<span class="hljs-comment">//同removeIndex()</span><br>                    data[i] = data[i<span class="hljs-number">+1</span>];<br>                &#125;<br>                --length;<br>                <span class="hljs-keyword">return</span> SUCCESS;<br>            &#125;<br><br>            <span class="hljs-comment">/**</span><br><span class="hljs-comment">             * 返回查找元素的直接前驱</span><br><span class="hljs-comment">             */</span> <br>            <span class="hljs-function">T * <span class="hljs-title">prior</span><span class="hljs-params">(T elem)</span></span>&#123;<br>                <span class="hljs-keyword">if</span> (data[<span class="hljs-number">0</span>] == elem)&#123;<br>                    <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<span class="hljs-comment">//第一个元素没有直接前驱</span><br>                &#125;<br>                <span class="hljs-type">int</span> index = <span class="hljs-built_in">local</span>(elem);<br>                <span class="hljs-keyword">if</span>(index == <span class="hljs-number">-1</span>)&#123;<br>                    <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<span class="hljs-comment">//没有前驱返回空</span><br>                &#125;<br>                <span class="hljs-keyword">return</span> &amp;data[index<span class="hljs-number">-1</span>];<br>            &#125;<br><br>            <span class="hljs-comment">/**</span><br><span class="hljs-comment">             * 返回查找元素的直接后驱</span><br><span class="hljs-comment">             */</span> <br>            <span class="hljs-function">T * <span class="hljs-title">next</span><span class="hljs-params">(T elem)</span></span>&#123;<br>                <span class="hljs-keyword">if</span> (elem == data[length])&#123;<br>                    <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<span class="hljs-comment">//最后一个数据没有</span><br>                &#125;<br>                <span class="hljs-type">int</span> index = <span class="hljs-built_in">local</span>(elem);<br>                <span class="hljs-keyword">if</span> (index == <span class="hljs-number">-1</span>)&#123;<br>                    <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br>                &#125;<br>                <span class="hljs-keyword">return</span> &amp;data[index<span class="hljs-number">+1</span>];<br>            &#125;<br><br>            <span class="hljs-comment">/**</span><br><span class="hljs-comment">             * 返回线性表中元素的个数</span><br><span class="hljs-comment">             */</span> <br>            <span class="hljs-function"><span class="hljs-type">size_t</span> <span class="hljs-title">size</span><span class="hljs-params">()</span></span>&#123;<br>                <span class="hljs-keyword">return</span> length;<br>            &#125;<br><br>            <span class="hljs-comment">/**</span><br><span class="hljs-comment">             * 将线性表重置为空表，清空所有数据</span><br><span class="hljs-comment">             */</span> <br>            <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">clear</span><span class="hljs-params">()</span></span>&#123;<br>                length = <span class="hljs-number">0</span>;<span class="hljs-comment">//直接长度清空即可</span><br>            &#125;<br><br>            <span class="hljs-comment">/**</span><br><span class="hljs-comment">             * 判断线性表是否为空表，如果是空表，返回true，否则返回false</span><br><span class="hljs-comment">             */</span> <br>            <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">isEmpty</span><span class="hljs-params">()</span></span>&#123;<br>                <span class="hljs-keyword">return</span> length==<span class="hljs-number">0</span>;<br>            &#125;<br><br>            <span class="hljs-comment">/**</span><br><span class="hljs-comment">             * 遍历线性表</span><br><span class="hljs-comment">             */</span> <br>            <span class="hljs-function">Status <span class="hljs-title">show</span><span class="hljs-params">()</span></span>&#123;<br>                <span class="hljs-keyword">for</span> (<span class="hljs-type">size_t</span> i = <span class="hljs-number">1</span>; i &lt;= length; i++)&#123;<br>                    std::cout&lt;&lt;<span class="hljs-string">&quot;data[&quot;</span>&lt;&lt;i&lt;&lt;<span class="hljs-string">&quot;]=&quot;</span>&lt;&lt;data[i]&lt;&lt;<span class="hljs-string">&quot;\n&quot;</span>;<br>                &#125;<br>                <span class="hljs-keyword">return</span> SUCCESS;<br>            &#125;<br><br>    &#125;;<span class="hljs-comment">//顺序存储结构类结束</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>STL(Standard Template Library)标准模板库中的顺序表</p>
+</blockquote>
+<blockquote>
+<p>Array</p>
+</blockquote>
+<p>Array是C++11新添加的一种容器。是一种固定大小的容器。容器中包含着以严格的线性序列的排列的数据元素。  并且不通过分配器管理其内存的分配。其编译是常数阶，没有格外的内存和时间开销。</p>
+<p>(Array的使用推荐博客:<a target="_blank" rel="noopener" href="https://blog.csdn.net/zhengqijun_/article/details/81566109#%EF%BC%881%EF%BC%89">c++ array模板类使用</a>,这里是分析源码。)</p>
+<p>Array源码分析(gcc version 8.1.0 (x86_64-win32-sjlj-rev0, Built by MinGW-W64 project)</p>
+<p>(我是直接从里面拷出来看的&#x3D;-&#x3D;)</p>
+<p>__array_traits结构体,是作为存储用的。Array的底层依旧是一个数组。</p>
+<p><img src="/img/docs/%E7%BA%BF%E6%80%A7%E8%A1%A8%E7%9A%84%E9%A1%BA%E5%BA%8F%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84/2.webp" srcset="/img/loading.gif" lazyload></p>
+<p>当Array的大小为O时，底层是一个空的结构体。</p>
+<p><img src="/img/docs/%E7%BA%BF%E6%80%A7%E8%A1%A8%E7%9A%84%E9%A1%BA%E5%BA%8F%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84/3.webp" srcset="/img/loading.gif" lazyload alt="3"></p>
+<p>Array是一个结构体。里面重命名了大量的数据类型。</p>
+<p><img src="/img/docs/%E7%BA%BF%E6%80%A7%E8%A1%A8%E7%9A%84%E9%A1%BA%E5%BA%8F%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84/4.webp" srcset="/img/loading.gif" lazyload alt="4"></p>
+<blockquote>
+<p>fill函数实现</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span></span><br><span class="hljs-function"><span class="hljs-title">fill</span><span class="hljs-params">(<span class="hljs-type">const</span> value_type&amp; __u)</span></span><br><span class="hljs-function"></span>&#123; std::<span class="hljs-built_in">fill_n</span>(<span class="hljs-built_in">begin</span>(), <span class="hljs-built_in">size</span>(), __u); &#125;<span class="hljs-comment">//调用了fill_n的函数</span><br><span class="hljs-comment">//fill_n函数:https://www.cnblogs.com/Emilylice/p/7754700.html</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p> swap函数实现</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs cpp">      <span class="hljs-function"><span class="hljs-type">void</span></span><br><span class="hljs-function">      <span class="hljs-title">swap</span><span class="hljs-params">(array&amp; __other)</span></span><br><span class="hljs-function">      <span class="hljs-title">noexcept</span><span class="hljs-params">(_AT_Type::_Is_nothrow_swappable::value)</span></span><br><span class="hljs-function">      </span>&#123; std::<span class="hljs-built_in">swap_ranges</span>(<span class="hljs-built_in">begin</span>(), <span class="hljs-built_in">end</span>(), __other.<span class="hljs-built_in">begin</span>()); &#125;<span class="hljs-comment">//调用了swap_ranges函数。</span><br><br><span class="hljs-function">swap_ranges</span><br><span class="hljs-function">      <span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> _ForwardIterator1, <span class="hljs-keyword">typename</span> _ForwardIterator2&gt;</span><br><span class="hljs-function">        _ForwardIterator2</span><br><span class="hljs-function">        <span class="hljs-title">swap_ranges</span><span class="hljs-params">(_ForwardIterator1 __first1, _ForwardIterator1 __last1,</span></span><br><span class="hljs-params"><span class="hljs-function">        _ForwardIterator2 __first2)</span></span><br><span class="hljs-function">      </span>&#123;<br>      <span class="hljs-comment">// concept requirements</span><br>      __glibcxx_function_requires(_Mutable_ForwardIteratorConcept&lt;<br>                  _ForwardIterator1&gt;)<br>      __glibcxx_function_requires(_Mutable_ForwardIteratorConcept&lt;<br>                  _ForwardIterator2&gt;)<br>      __glibcxx_requires_valid_range(__first1, __last1);<br><br>      <span class="hljs-keyword">for</span> (; __first1 != __last1; ++__first1, (<span class="hljs-type">void</span>)++__first2)<br>    std::<span class="hljs-built_in">iter_swap</span>(__first1, __first2);<span class="hljs-comment">//实践上是遍历原迭代器，然后交换值。</span><br>      <span class="hljs-keyword">return</span> __first2;<span class="hljs-comment">//返回交换后的数据</span><br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>data函数的实现</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">_GLIBCXX17_CONSTEXPR pointer</span><br><span class="hljs-function"><span class="hljs-title">data</span><span class="hljs-params">()</span> <span class="hljs-keyword">noexcept</span> </span><br><span class="hljs-function"></span>&#123; <span class="hljs-keyword">return</span> _AT_Type::_S_ptr(_M_elems); &#125;<span class="hljs-comment">//直接调用__array_traits结构体中的指针函数。</span><br>  <span class="hljs-comment">//取出当前指针。_M_elems是底层的数组或者空结构体。</span><br><br><span class="hljs-function">_GLIBCXX17_CONSTEXPR const_pointer</span><br><span class="hljs-function"><span class="hljs-title">data</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> <span class="hljs-keyword">noexcept</span><span class="hljs-comment">//返回常量的data()</span></span><br><span class="hljs-function"></span>&#123; <span class="hljs-keyword">return</span> _AT_Type::_S_ptr(_M_elems); &#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>begin,end等迭代器实现</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// Iterators.</span><br>      <span class="hljs-function">_GLIBCXX17_CONSTEXPR iterator</span><br><span class="hljs-function">      <span class="hljs-title">begin</span><span class="hljs-params">()</span> <span class="hljs-keyword">noexcept</span></span><br><span class="hljs-function">      </span>&#123; <span class="hljs-keyword">return</span> <span class="hljs-built_in">iterator</span>(<span class="hljs-built_in">data</span>()); &#125; <span class="hljs-comment">//调用data(),将其转换为数据类型的指针。</span><br><span class="hljs-comment">//=-=假设我们是array&lt;int,10&gt;。那么T就是int类型的。data()返回的就是int *的。然后再转为int *类型，</span><br><span class="hljs-comment">//emmm，我测试了一下，好像也是int *；好像是强制转换了T *类型的了。</span><br><br>      <span class="hljs-function">_GLIBCXX17_CONSTEXPR const_iterator</span><br><span class="hljs-function">      <span class="hljs-title">begin</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> <span class="hljs-keyword">noexcept</span></span><br><span class="hljs-function">      </span>&#123; <span class="hljs-keyword">return</span> <span class="hljs-built_in">const_iterator</span>(<span class="hljs-built_in">data</span>()); &#125;<br><br>      <span class="hljs-function">_GLIBCXX17_CONSTEXPR iterator</span><br><span class="hljs-function">      <span class="hljs-title">end</span><span class="hljs-params">()</span> <span class="hljs-keyword">noexcept</span></span><br><span class="hljs-function">      </span>&#123; <span class="hljs-keyword">return</span> <span class="hljs-built_in">iterator</span>(<span class="hljs-built_in">data</span>() + _Nm); &#125;<span class="hljs-comment">//end()函数则是调用data()取得底层数组的首地址。</span><br><span class="hljs-comment">//然后再加上长度。返回就是尾部地址。然后再转换一下。就得到T *了。</span><br>(需要注意的是！！<span class="hljs-built_in">data</span>()+_Nm后，其地址不包含了数据了。也就是<span class="hljs-built_in">data</span>()+_Nm<span class="hljs-number">-1</span>才是最后的尾数据。)<br><br>      <span class="hljs-function">_GLIBCXX17_CONSTEXPR const_iterator</span><br><span class="hljs-function">      <span class="hljs-title">end</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> <span class="hljs-keyword">noexcept</span></span><br><span class="hljs-function">      </span>&#123; <span class="hljs-keyword">return</span> <span class="hljs-built_in">const_iterator</span>(<span class="hljs-built_in">data</span>() + _Nm); &#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>at,front,back等取值函数的实现</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">/*****************************************at()******************************/</span><br>(首先是传入了下标，然后利用三元运算法，将下标和数组长度进行比较。<br>如果传入的下标比数组长度要长度要小，就调用__array_traits结构体中引用函数,返回其数据的引用。<br>否则，抛出异常。)<br><span class="hljs-function"><span class="hljs-keyword">constexpr</span> const_reference</span><br><span class="hljs-function">      <span class="hljs-title">at</span><span class="hljs-params">(size_type __n)</span> <span class="hljs-type">const</span></span><br><span class="hljs-function">      </span>&#123;<br>    <span class="hljs-comment">// Result of conditional expression must be an lvalue so use</span><br>    <span class="hljs-comment">// boolean ? lvalue : (throw-expr, lvalue)</span><br>    <span class="hljs-keyword">return</span> __n &lt; _Nm ? _AT_Type::_S_ref(_M_elems, __n)<br>      : (std::__throw_out_of_range_fmt(__N(<span class="hljs-string">&quot;array::at: __n (which is %zu) &quot;</span><br>                           <span class="hljs-string">&quot;&gt;= _Nm (which is %zu)&quot;</span>),<br>                       __n, _Nm),<br>         _AT_Type::_S_ref(_M_elems, <span class="hljs-number">0</span>));<br>      &#125;<br><span class="hljs-comment">/*****************************************front()******************************/</span><br>      <span class="hljs-function">_GLIBCXX17_CONSTEXPR reference</span><br><span class="hljs-function">      <span class="hljs-title">front</span><span class="hljs-params">()</span> <span class="hljs-keyword">noexcept</span></span><br><span class="hljs-function">      </span>&#123; <span class="hljs-keyword">return</span> *<span class="hljs-built_in">begin</span>(); &#125;<span class="hljs-comment">//直接调用begin().*begin()就是直接返回值。</span><br><span class="hljs-comment">//而reference是数据的引用。所有front()其实就是返回数据的引用。</span><br>      <span class="hljs-function"><span class="hljs-keyword">constexpr</span> const_reference</span><br><span class="hljs-function">      <span class="hljs-title">front</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> <span class="hljs-keyword">noexcept</span></span><br><span class="hljs-function">      </span>&#123; <span class="hljs-keyword">return</span> _AT_Type::_S_ref(_M_elems, <span class="hljs-number">0</span>); &#125;<span class="hljs-comment">//如果返回的是一个常量的话，</span><br><span class="hljs-comment">//是直接调用__array_traits结构体中引用函数返回的。</span><br><span class="hljs-comment">/*****************************************back()******************************/</span><br>      <span class="hljs-function">_GLIBCXX17_CONSTEXPR reference</span><br><span class="hljs-function">      <span class="hljs-title">back</span><span class="hljs-params">()</span> <span class="hljs-keyword">noexcept</span></span><br><span class="hljs-function">      </span>&#123; <span class="hljs-keyword">return</span> _Nm ? *(<span class="hljs-built_in">end</span>() - <span class="hljs-number">1</span>) : *<span class="hljs-built_in">end</span>(); &#125;<span class="hljs-comment">//这是一个三元运算符。如果你给array的长度为0的话，</span><br><span class="hljs-comment">//就直接返回end()的值。我测试了一下，    array&lt;int,0&gt; arr;cout&lt;&lt;arr.end()&lt;&lt;endl;输出的0</span><br><span class="hljs-comment">//.至于为什么。有点搞不懂。</span><br><span class="hljs-comment">//长度不为0，就返回最后一个数据的引用。end()返回的不是最后的数据，而是最后一个数据后的下一个地址。</span><br><br>      <span class="hljs-function"><span class="hljs-keyword">constexpr</span> const_reference</span><br><span class="hljs-function">      <span class="hljs-title">back</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> <span class="hljs-keyword">noexcept</span></span><br><span class="hljs-function">      </span>&#123;<br>    <span class="hljs-keyword">return</span> _Nm ? _AT_Type::_S_ref(_M_elems, _Nm - <span class="hljs-number">1</span>)<br>               : _AT_Type::_S_ref(_M_elems, <span class="hljs-number">0</span>);<br>      &#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>size,max_size,empty等函数的实现</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">/*****************************************size()******************************/</span><br>      <span class="hljs-comment">// Capacity.</span><br>      <span class="hljs-function"><span class="hljs-keyword">constexpr</span> size_type</span><br><span class="hljs-function">      <span class="hljs-title">size</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> <span class="hljs-keyword">noexcept</span> </span>&#123; <span class="hljs-keyword">return</span> _Nm; &#125;<span class="hljs-comment">//直接返回定义的大小。</span><br><span class="hljs-comment">//所以，size()不是返回当前使用的数据元素长度。</span><br><span class="hljs-comment">/*****************************************max_size()******************************/</span><br>      <span class="hljs-function"><span class="hljs-keyword">constexpr</span> size_type</span><br><span class="hljs-function">      <span class="hljs-title">max_size</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> <span class="hljs-keyword">noexcept</span> </span>&#123; <span class="hljs-keyword">return</span> _Nm; &#125;<span class="hljs-comment">//和size一样的。</span><br><span class="hljs-comment">/*****************************************empty()******************************/</span><br>      <span class="hljs-function"><span class="hljs-keyword">constexpr</span> <span class="hljs-type">bool</span></span><br><span class="hljs-function">      <span class="hljs-title">empty</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> <span class="hljs-keyword">noexcept</span> </span>&#123; <span class="hljs-keyword">return</span> <span class="hljs-built_in">size</span>() == <span class="hljs-number">0</span>; &#125;<span class="hljs-comment">//这个，只有你定义的长度不是0的话。</span><br><span class="hljs-comment">//这个就是恒定为假了。哪怕你没有使用。</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>总结</p>
+</blockquote>
+<p>顺序表其实和数组并没有太多的差异。我们其实完全可以使用数组来完成顺序表的功能。但是，依旧推荐Array容器来代替数组。因为其用有迭代器以及at()等方法。比数组更加安全，也更加方便。需要注意的是，Array是C++11新添的。所以需要C++11版本及其以下版本。</p>
+<blockquote>
+<p>个人后话</p>
+</blockquote>
+<p>第一次看源码，&#x3D;-&#x3D;还有点看不懂呀。但是我会坚持下去。本来今天打算把动态顺序表也一起放进去的。可是，已经晚上9点了。。。。还是算了(明天再放吧)。本来昨天还说晚上不写代码的。结果还是写了。完蛋了。</p>
+<blockquote>
+<p>修改</p>
+</blockquote>
+<p>2020年2月4日 忘记了size_t是不可能有负数的去了，在申请内存那个地方不需要判断是否为小于零，而且小于零也写错了。&#x3D;-&#x3D;太不应该了。并且考虑到因为是泛型编程GP。不应该在抽象类中使用sort的。因为如果T是一个类的对象，那么又该怎么排序呢？所以在代码中去掉了sort()函数。且<a href="https://lqzhi.github.io/2020/02/02/%E7%BA%BF%E6%80%A7%E8%A1%A8/">线性表</a>中的顺序结构抽象类会去掉sort()函数。在此声明。</p>
+<p><strong>修改前的代码:</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">/**</span><br><span class="hljs-comment">            * 构造一个线性表,申请内存</span><br><span class="hljs-comment">            */</span><br>           <span class="hljs-function">Status <span class="hljs-title">init</span><span class="hljs-params">()</span></span>&#123;<br>               <span class="hljs-keyword">if</span> (SIZE &lt; <span class="hljs-number">0</span>)&#123;<br>                   data = <span class="hljs-keyword">new</span> T[SIZE<span class="hljs-number">+1</span>];<span class="hljs-comment">//多申请一个空间,空余出第一个数据空间</span><br>               &#125;<br>               data = <span class="hljs-keyword">new</span> T[SIZE<span class="hljs-number">+1</span>];<span class="hljs-comment">//多申请一个空间,空余出第一个数据空间</span><br>               length = <span class="hljs-number">0</span>;<span class="hljs-comment">//长度为0</span><br>               <span class="hljs-keyword">if</span> (!data)&#123;<br>                   <span class="hljs-built_in">exit</span>(ERROR);<span class="hljs-comment">//如果内存申请失败，退出</span><br>               &#125;<br>               <span class="hljs-keyword">return</span> SUCCESS;<br>           &#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>修改后的代码:</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 构造一个线性表,申请内存</span><br><span class="hljs-comment"> */</span><br><span class="hljs-function">Status <span class="hljs-title">init</span><span class="hljs-params">()</span></span>&#123;<br>    data = <span class="hljs-keyword">new</span> T[SIZE<span class="hljs-number">+1</span>];<span class="hljs-comment">//多申请一个空间,空余出第一个数据空间</span><br>    length = <span class="hljs-number">0</span>;<span class="hljs-comment">//长度为0</span><br>    <span class="hljs-keyword">if</span> (!data)&#123;<br>        <span class="hljs-built_in">exit</span>(ERROR);<span class="hljs-comment">//如果内存申请失败，退出</span><br>    &#125;<br>    <span class="hljs-keyword">return</span> SUCCESS;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="category-chain-item">数据结构</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="print-no-link">#数据结构</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>线性表的顺序存储结构</div>
+      <div>https://lqzhi.github.io/2020/02/03/线性表的顺序存储结构/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>LQZHI</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年2月3日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/02/04/%E7%BA%BF%E6%80%A7%E8%A1%A8%E7%9A%84%E9%A1%BA%E5%BA%8F%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84%E6%89%A9%E5%B1%95-%E5%8A%A8%E6%80%81%E9%A1%BA%E5%BA%8F%E8%A1%A8/" title="线性表的顺序存储结构扩展(动态顺序表)">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">线性表的顺序存储结构扩展(动态顺序表)</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/02/02/%E7%BA%BF%E6%80%A7%E8%A1%A8/" title="线性表">
+                        <span class="hidden-mobile">线性表</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

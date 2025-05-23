@@ -1,0 +1,838 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/page/favicon.png">
+  <link rel="icon" href="/img/page/favicon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="LQZHI">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前言  &emsp;&emsp;在安卓开发 初步了解安卓和配置安卓环境中，我们简单的介绍了安卓和配置安卓环境。我们使用了Android Studio作为我们开发安卓的主要工具。所以，在本次中依旧使用Android Stuido。  了解 JDK、SDK、NDK  JDK&emsp;&emsp;JDK是JAVA语言的编译器，全称为Java Development Kit,即Java开发工具包。因为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安卓开发 开发前你需要了解的一些资料(一)">
+<meta property="og:url" content="https://lqzhi.github.io/2020/02/16/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%89%8D%E4%BD%A0%E9%9C%80%E8%A6%81%E4%BA%86%E8%A7%A3%E7%9A%84%E4%B8%80%E4%BA%9B%E8%B5%84%E6%96%99-%E4%B8%80/index.html">
+<meta property="og:site_name" content="MY-BLOG">
+<meta property="og:description" content="前言  &emsp;&emsp;在安卓开发 初步了解安卓和配置安卓环境中，我们简单的介绍了安卓和配置安卓环境。我们使用了Android Studio作为我们开发安卓的主要工具。所以，在本次中依旧使用Android Stuido。  了解 JDK、SDK、NDK  JDK&emsp;&emsp;JDK是JAVA语言的编译器，全称为Java Development Kit,即Java开发工具包。因为">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%89%8D%E4%BD%A0%E9%9C%80%E8%A6%81%E4%BA%86%E8%A7%A3%E7%9A%84%E4%B8%80%E4%BA%9B%E8%B5%84%E6%96%99-%E4%B8%80/1.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%89%8D%E4%BD%A0%E9%9C%80%E8%A6%81%E4%BA%86%E8%A7%A3%E7%9A%84%E4%B8%80%E4%BA%9B%E8%B5%84%E6%96%99-%E4%B8%80/2.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%89%8D%E4%BD%A0%E9%9C%80%E8%A6%81%E4%BA%86%E8%A7%A3%E7%9A%84%E4%B8%80%E4%BA%9B%E8%B5%84%E6%96%99-%E4%B8%80/3.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%89%8D%E4%BD%A0%E9%9C%80%E8%A6%81%E4%BA%86%E8%A7%A3%E7%9A%84%E4%B8%80%E4%BA%9B%E8%B5%84%E6%96%99-%E4%B8%80/4.webp">
+<meta property="article:published_time" content="2020-02-16T01:07:38.000Z">
+<meta property="article:modified_time" content="2025-05-23T03:42:37.228Z">
+<meta property="article:author" content="LQZHI">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lqzhi.github.io/img/docs/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%89%8D%E4%BD%A0%E9%9C%80%E8%A6%81%E4%BA%86%E8%A7%A3%E7%9A%84%E4%B8%80%E4%BA%9B%E8%B5%84%E6%96%99-%E4%B8%80/1.webp">
+  
+  
+  
+  <title>安卓开发 开发前你需要了解的一些资料(一) - MY-BLOG</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"lqzhi.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>闻言的笔记本</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/page/Page.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="安卓开发 开发前你需要了解的一些资料(一)"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-02-16 09:07" pubdate>
+          2020年2月16日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          31 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">安卓开发 开发前你需要了解的一些资料(一)</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2025年5月23日 中午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>前言</p>
+</blockquote>
+<p>&emsp;&emsp;在<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/0cc5ea986997">安卓开发 初步了解安卓和配置安卓环境</a>中，我们简单的介绍了安卓和配置安卓环境。我们使用了Android Studio作为我们开发安卓的主要工具。所以，在本次中依旧使用Android Stuido。</p>
+<blockquote>
+<p>了解 JDK、SDK、NDK</p>
+</blockquote>
+<p><strong>JDK</strong><br>&emsp;&emsp;JDK是JAVA语言的编译器，全称为Java Development Kit,即Java开发工具包。因为Android应用层采用Java开发，其运行在Java虚拟机(Dalvik虚拟机,与JVM虚拟机不同)上。关于JDK如何安装请看了解<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/3307dcf1a8e5">记录三 JAVA环境安装(1.8示例)</a>。<br>&emsp;&emsp;<strong>JDK建议安装1.8及其以上版本</strong>，因为不同的Android版本对JDK有相应的要求，例如Android 5.0默认使用JDK1.7编译，Android 7.0默认使用JDK1.8编译。<br>&emsp;&emsp;如果JDK为1.6或者1.78，而SDK为最新版本，就可能会导致一下问题。<br>&emsp;（1）创建项目后，浏览布局文件设计图时会报错Android N requires the IDE to be running with Java 1.8 or later.<br>&emsp;&emsp;（2）编译项目失败，提示错误 com&#x2F;android&#x2F;dx&#x2F;command&#x2F;dexer&#x2F;Main: Unsupported major.minor version 52.0.<br>&emsp;&emsp;（3）运行App失败，提示错误complieSdkVersion ‘android-24’ requires JDK 1.8 or later to compile.<br>SDK<br>&emsp;&emsp;SDK是Android应用的编译器，全称为 Software Development Kit，即软件开发工具包。SDK提供了App开发的常用工具合集。<br><img src="/img/docs/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%89%8D%E4%BD%A0%E9%9C%80%E8%A6%81%E4%BA%86%E8%A7%A3%E7%9A%84%E4%B8%80%E4%BA%9B%E8%B5%84%E6%96%99-%E4%B8%80/1.webp" srcset="/img/loading.gif" lazyload alt="loading-ag-673"></p>
+<p> 其中主要包括:</p>
+<ul>
+<li><p>add-ones 目录: 存放Google提供的服务扩展包。(Eclipse存在,Android Studio已经移动到其它地方去了。)</p>
+</li>
+<li><p>build-tools 目录: 存放各版本Android的各种编译工具。</p>
+</li>
+<li><p>docs 目录: 存放开发说明文档。</p>
+</li>
+<li><p>extras目录: 存放Android附加支持文件。主要有Android 的 support 支持包，Google 的几个工具和驱动、Intel 的 IntelHaxm。</p>
+</li>
+<li><p>platforms 目录: 存放各个版本的Android资源文件。包括字体、res 资源、模板等。</p>
+</li>
+<li><p>platform-tools和tools 目录，存放常用的开发辅助工具。十分重要。</p>
+</li>
+<li><p>samples 目录:存放各版本Android常用功能的demo 源码。</p>
+</li>
+<li><p>sources 目录: 存放各版本Android的API开发接口源码。</p>
+</li>
+<li><p>system-images 目录:存放模拟器各版本的系统镜像与管理工具。</p>
+</li>
+<li><p>emulator 目录: 存放模拟器软件。</p>
+</li>
+<li><p>patcher：存放补丁文件夹。(我也不知道是啥，翻译过来就是补丁)</p>
+</li>
+<li><p>cmake：存放跨平台的编译工具，用来编译C&#x2F;C++代码。</p>
+</li>
+<li><p>ndk : 存放NDK开发工具。</p>
+</li>
+<li><p>fonts：存放字体。</p>
+</li>
+<li><p>licenses：存放SDK的验证，文件中存放着SKD的校验码。</p>
+</li>
+<li><p>lldb：存放c&#x2F;c++调试器，用于NDK的调试。</p>
+</li>
+<li><p>skins：皮肤文件夹，存放一些虚拟机的效果图片。<br>(注：图片中仅仅是刚安装上的SDK。后面下载会会新添一些文件。例如安装了NDK的话就会存在ndk文件夹。)<br><strong>NDK</strong><br>&emsp;&emsp;&emsp;NDK是C\C++代码的编译器,全称Native Development Kit。即原生开发工具包。该工具主要提供JNI接口使用，先将C\C++代码编译成so库,然后由Java代码通过JNI接口调用so库。<br>&emsp;&emsp;因为Java字节码极其容易反编译查看到源代码，所以利用C\C++编译出来的so库可以存放一些核心代码，so库与Java字节码更难破解。且C\C++运行速度比Java快，可以编写一些处理量比较大、耗时的数据。(例如，音频，视频的处理运算。)</p>
+<blockquote>
+<p>简单了解Gradle</p>
+</blockquote>
+</li>
+</ul>
+<p>&emsp;&emsp;Gradle是一个基于Apache Ant和Apache Maven概念的项目自动化构建开源工具。它使用一种基于Groovy的特定领域语言(DSL)来声明项目设置。其主要用于描述Android开发所需要的环境，管理第三方jar包，第三方扩展库，jar依赖关系等。</p>
+<blockquote>
+<p>了解开发App的工程结构</p>
+</blockquote>
+<p>&emsp;&emsp;Android Studio的工程创建分成了两个层次。<br>第一层次是<strong>Project</strong>(项目)，指定了当前项目的工作空间。其相当于Eclipse的workspace。<br>第二层次是<strong>Module</strong>(模块)，指定了当前项目中的模块，其中一个模块指一个单独的App工程。但也可以通过模块化编程合为一个App。其相当于Eclipse的project。<br><img src="/img/docs/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%89%8D%E4%BD%A0%E9%9C%80%E8%A6%81%E4%BA%86%E8%A7%A3%E7%9A%84%E4%B8%80%E4%BA%9B%E8%B5%84%E6%96%99-%E4%B8%80/2.webp" srcset="/img/loading.gif" lazyload alt="Project结构图"><br>&emsp;&emsp;从结构构图中可以看到，该项目下有4个文件夹，其中<code>.gradle</code>用来保存gradle的依赖信息,<code>.idea</code>用来保存开发工具的设置信息。而<code>app</code>是我们主要开发的文件夹，gradle是存放gradle的文件。我们只要关心app文件夹即可。<br>  不过呢，还是要需要了解一些其根目录下的一些文件。</p>
+<ul>
+<li><p>.gitignore 文件：指明git忽略文件清单，其指定的文件夹不会上传到仓库中。</p>
+</li>
+<li><p>Account.iml 文件:是项目用于保存开发工具信息的文件。其文件名是项目名。</p>
+</li>
+<li><p>build.gradle 文件:项目级编译规则文件，用于描述整个项目工程的编译规则。</p>
+</li>
+<li><p>proguard-rules.pro 文件:用于描述Java文件的代码混淆规则。</p>
+</li>
+<li><p>gradle.properties 文件:用于配置编译工程的命令行参数，一般无需改动。</p>
+</li>
+<li><p>gradlew 文件: Gradle Wrapper，用于是Gradle本身的安装、部署。其为Linux 下可执行脚本。</p>
+</li>
+<li><p>gradlew.bat 文件: Gradle Wrapper，用于是Gradle本身的安装、部署。其为Windows下可执行脚本。</p>
+</li>
+<li><p>local.properties 文件: 用于描述开发者本机的环境配置。SDK、NDK等指定路径就该文件中。</p>
+</li>
+<li><p>settings.gradle 文件：配置哪些模块一起编译。初始内容为include ‘:app’，表示只编译App模块。</p>
+</li>
+</ul>
+<p>&emsp;&emsp;其实app文件夹就是一个Module。当我们在创建一个新的Project时，就创建了一个默认的Module。其就是app文件夹。<br><img src="/img/docs/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%89%8D%E4%BD%A0%E9%9C%80%E8%A6%81%E4%BA%86%E8%A7%A3%E7%9A%84%E4%B8%80%E4%BA%9B%E8%B5%84%E6%96%99-%E4%B8%80/3.webp" srcset="/img/loading.gif" lazyload alt="loading-ag-695"></p>
+<p>其中主要包括：</p>
+<ul>
+<li>build 目录:存放编译构建后的文件。</li>
+<li>libs 目录:存放第三方jar包。</li>
+<li>src 目录:源文件。</li>
+<li>build.gradle 文件：当前Module的配置文件。</li>
+</ul>
+<p>其中src目录和build.gradle文件比较重要。下面会仔细讲解。<br>&emsp;&emsp;<strong>src文件夹包含了androidTest文件夹、main文件夹(重要！)、test文件夹。</strong></p>
+<ul>
+<li>androidTest 目录:安卓单元测试。其主要涉及Android仪器的单元测试。</li>
+<li>main 目录:开发目录。</li>
+<li>test 目录:单元测试。其不包含安卓的框架测试。</li>
+</ul>
+<p>其中androidTest和test主要包含了java目录，其中包含着相对应的测试。而main是我们主要的开发目录。主要包括如下：</p>
+<ul>
+<li><p>java 目录：主要存放java文件。其目录下是包名。</p>
+</li>
+<li><p>res 目录: 安卓资源文件夹。主要存放布局资源，图片资源等等。</p>
+</li>
+<li><p>res\drawable 目录: 存放图形描述文件与用户图片。其中后面跟随着的hdpi、mdpi、xhdpi、xxhdpi等等都是指图片的分辨率，相对应的图片应该放入相对应的文件夹中。</p>
+</li>
+<li><p>res\mipmap 目录:app的图标文件夹。存放app的图标。其同drawable文件夹一样，都有着相对应的分辨率文件夹。</p>
+</li>
+<li><p>res\layout 目录:存放app页面的布局文件。</p>
+</li>
+<li><p>res\values 目录:存放的是一些常量定义文件。例如字符串常量定义string.xml,像素常量dimens.xml、颜色常量colors.xml，样式风格styles.xml等。</p>
+</li>
+<li><p>AndroidManifest.xml 文件:安卓清单文件。(<strong>重要！指定其内部的运行配置！</strong>)</p>
+</li>
+</ul>
+<p><strong>AndroidManifest.xml部分说明：</strong><br>&emsp;&emsp;AndroidManifest.xml 用于指定App内部的运行配置,其是一个XML描述文件，根节点为manifest，根节点的package 指定了该App的包名。manifest下面又有若干个子节点,分别说明如下。<br>(一份当前我制作app的AndroidManifest.xml文件内容)</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;utf-8&quot;</span>?&gt;</span><span class="hljs-comment">&lt;!--说明xml文件的版本和编码格式--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">manifest</span> <span class="hljs-attr">xmlns:android</span>=<span class="hljs-string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">xmlns:dist</span>=<span class="hljs-string">&quot;http://schemas.android.com/apk/distribution&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">package</span>=<span class="hljs-string">&quot;com.palz.account&quot;</span>&gt;</span><span class="hljs-comment">&lt;!--根节点,指定app的包名--&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dist:module</span> <span class="hljs-attr">dist:instant</span>=<span class="hljs-string">&quot;true&quot;</span> /&gt;</span><span class="hljs-comment">&lt;!--模块化结点,指定Goolge Play免安装--&gt;</span><br><br>    <span class="hljs-comment">&lt;!--应用根结点--&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">application</span> </span><br><span class="hljs-tag"></span><br><span class="hljs-tag">        &lt;!<span class="hljs-attr">--允许备份--</span>&gt;</span><br>        android:allowBackup=&quot;true&quot;<br><br>        <span class="hljs-comment">&lt;!--指定app的启动图标--&gt;</span><br>        android:icon=&quot;@mipmap/ic_launcher&quot;<br><br>        <span class="hljs-comment">&lt;!--指定app的名称--&gt;</span><br>        android:label=&quot;@string/app_name&quot;<br><br>        <span class="hljs-comment">&lt;!--指定app的圆形图标--&gt;</span><br>        android:roundIcon=&quot;@mipmap/ic_launcher_round&quot;<br><br>        <span class="hljs-comment">&lt;!--是否愿意支持从右到左(RTL是right-to-left 的缩写)的布局--&gt;</span><br>        android:supportsRtl=&quot;true&quot;<br><br>        <span class="hljs-comment">&lt;!--指定app的主题--&gt;</span><br>        android:theme=&quot;@style/AppTheme&quot;&gt;<br><br>        <span class="hljs-comment">&lt;!--活动根结点--&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">activity</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;.MainActivity&quot;</span>&gt;</span><br>            <span class="hljs-comment">&lt;!--Intent过滤器根结点:只有符合相对应的要求才能通过Intent启动活动--&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">intent-filter</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">action</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;android.intent.action.MAIN&quot;</span> /&gt;</span><br><br>                <span class="hljs-tag">&lt;<span class="hljs-name">category</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">&quot;android.intent.category.LAUNCHER&quot;</span> /&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">intent-filter</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">activity</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">application</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">manifest</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>其中， AndroidManifest.xml 能够包含的节点有:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;utf-8&quot;</span>?&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">manifest</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dist:module</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">dist:delivery</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">dist:install-time</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">dist:conditions</span>&gt;</span><br>              <span class="hljs-comment">&lt;!-- Requires that the device support AR to download the module at</span><br><span class="hljs-comment">              app install-time.  --&gt;</span><br>              <span class="hljs-tag">&lt;<span class="hljs-name">dist:device-feature</span> /&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">dist:conditions</span>&gt;</span><br>          <span class="hljs-tag">&lt;/<span class="hljs-name">dist:install-time</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">dist:delivery</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">dist:module</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">uses-permission</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">permission</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">permission-tree</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">permission-group</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">instrumentation</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">uses-sdk</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">uses-configuration</span> /&gt;</span> <br>    <span class="hljs-tag">&lt;<span class="hljs-name">uses-feature</span> /&gt;</span> <br>    <span class="hljs-tag">&lt;<span class="hljs-name">supports-screens</span> /&gt;</span> <br>    <span class="hljs-tag">&lt;<span class="hljs-name">compatible-screens</span> /&gt;</span> <br>    <span class="hljs-tag">&lt;<span class="hljs-name">supports-gl-texture</span> /&gt;</span> <br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">application</span>&gt;</span><br><br>        <span class="hljs-tag">&lt;<span class="hljs-name">activity</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">intent-filter</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">action</span> /&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">category</span> /&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">data</span> /&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">intent-filter</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">meta-data</span> /&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">activity</span>&gt;</span><br><br>        <span class="hljs-tag">&lt;<span class="hljs-name">activity-alias</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">intent-filter</span>&gt;</span>. . .<span class="hljs-tag">&lt;/<span class="hljs-name">intent-filter</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">meta-data</span> /&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">activity-alias</span>&gt;</span><br><br>        <span class="hljs-tag">&lt;<span class="hljs-name">service</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">intent-filter</span>&gt;</span>. . .<span class="hljs-tag">&lt;/<span class="hljs-name">intent-filter</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">meta-data</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">service</span>&gt;</span><br><br>        <span class="hljs-tag">&lt;<span class="hljs-name">receiver</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">intent-filter</span>&gt;</span>. . .<span class="hljs-tag">&lt;/<span class="hljs-name">intent-filter</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">meta-data</span> /&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">receiver</span>&gt;</span><br><br>        <span class="hljs-tag">&lt;<span class="hljs-name">provider</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">grant-uri-permission</span> /&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">meta-data</span> /&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">path-permission</span> /&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">provider</span>&gt;</span><br><br>        <span class="hljs-tag">&lt;<span class="hljs-name">uses-library</span> /&gt;</span><br><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">application</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">manifest</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>下面介绍几个常用的标签节点</p>
+<ol>
+<li>manifest 标签:<br>&emsp;&emsp;manifest标签是AndroidManifest.xml 的根节点标签。其常用于设置与项目相关的一些属性。例如比如用于唯一标识应用程序的 package 属性，用于记录应用程序版本的 Android:versionName 属性等等。<br>&emsp;&emsp;其中xmls:android属性必须为<code>http://schemas.android.com/apk/res/android</code>,<br>&emsp;&emsp;xmlns:dist属性必须为<code>http://schemas.android.com/apk/distribution</code>。<br>其用于表示命名空间。</li>
+<li>application 标签:<br>&emsp;&emsp; manifest 标签中有且只有一个 application 标签。其用于指定应用程序的各种元数据（包括标题、图标和主题）。同时也可以作为活动(Activity),服务(Service),内容提供器（Provider）和广播接收器（Broadcast Receiver）标签的容器,用于指示应用程序组件。</li>
+<li>uses-permission 标签:<br>&emsp;&emsp;uses-permission标签用于指明程序会使用到的权限。而这些权限是应用正常运行所必须的。。</li>
+<li>permission 标签:<br>&emsp;&emsp;permission 标签用于指明其它程序访问你的组件时所需要的权限，当你提供了其它功能给其它软件时，其它软件需要在清单文件(AndroidManifest.xml)中指明其permission才可以访问到你的组件功能或者数据。<br>5.instrumentation 标签：<br>&emsp;&emsp;istrumentation 标签其指明了instrumentation 类的测试类。instrumentation 类提供一个框架，用来在应用程序运行时在活动或者服务上运行测试，可以通过它来监控应用程序及其与系统资源的交互。每当应用程序新添一个测试类时，需要为其新添一个节点。</li>
+</ol>
+<p>app中所包含的目录介绍到这里。下面介绍一下啊app根目录下的几个文件:</p>
+<ul>
+<li><p>build.gradle 文件：该文件用于App工程的编译规则。</p>
+</li>
+<li><p>.gitignore 文件: 该文件用于指明git忽略清单，其包含的文件不会上传到仓库中。</p>
+</li>
+<li><p>gradle.properties 文件：该文件用于配置编译工程的命令行参数，一般无需改动。</p>
+</li>
+<li><p>app.iml 文件:用来保存开发工具信息。该文件名是当前模块名。</p>
+</li>
+</ul>
+<p>其中最为重要的是build.gradle。下面简单的介绍一下build.gradle文件：<br>&emsp;&emsp;build.gradle分为项目级别和模块级别，项目级别的我们一般无需改动，我们只需要关注模块级别的build.gradle即可。<br>(一份当前我在制作app的build.gradle的文件(app模块))</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs groovy">apply <span class="hljs-attr">plugin:</span> <span class="hljs-string">&#x27;com.android.application&#x27;</span><span class="hljs-comment">//指明module的类型，com.android.application为程序，com.android.library为安卓库</span><br><br>android &#123;<br>    compileSdkVersion <span class="hljs-number">29</span><span class="hljs-comment">//编译的SDK版本</span><br>    buildToolsVersion <span class="hljs-string">&quot;29.0.3&quot;</span><span class="hljs-comment">//编译的Tools版本</span><br>    defaultConfig &#123;<br>        applicationId <span class="hljs-string">&quot;com.palz.account&quot;</span><span class="hljs-comment">//应用程序的包名</span><br>        minSdkVersion <span class="hljs-number">15</span> <span class="hljs-comment">//最低支持的目标版本</span><br>        targetSdkVersion <span class="hljs-number">29</span><span class="hljs-comment">//当前最高支持的目标版本</span><br>        versionCode <span class="hljs-number">1</span> <span class="hljs-comment">//版本号</span><br>        versionName <span class="hljs-string">&quot;1.0&quot;</span><span class="hljs-comment">//版本名</span><br>        testInstrumentationRunner <span class="hljs-string">&quot;androidx.test.runner.AndroidJUnitRunner&quot;</span><span class="hljs-comment">//安卓测试库</span><br>    &#125;<br>    buildTypes &#123;<span class="hljs-comment">//build类型</span><br>        release &#123;<span class="hljs-comment">//发布</span><br>            minifyEnabled <span class="hljs-literal">false</span> <span class="hljs-comment">//是否开启混淆代码功能</span><br>            <span class="hljs-comment">//指定代码混淆规则文件的文件名</span><br>            proguardFiles getDefaultProguardFile(<span class="hljs-string">&#x27;proguard-android-optimize.txt&#x27;</span>), <span class="hljs-string">&#x27;proguard-rules.pro&#x27;</span><br>        &#125;<br>    &#125;<br>&#125;<br><br>dependencies &#123;<span class="hljs-comment">//指定App的编译信息</span><br>    implementation fileTree(<span class="hljs-attr">dir:</span> <span class="hljs-string">&#x27;libs&#x27;</span>, <span class="hljs-attr">include:</span> [<span class="hljs-string">&#x27;*.jar&#x27;</span>])<span class="hljs-comment">//指定引用jar包的路径</span><br>    implementation <span class="hljs-string">&#x27;androidx.appcompat:appcompat:1.1.0&#x27;</span><span class="hljs-comment">//引用appcompat库</span><br>    implementation <span class="hljs-string">&#x27;androidx.constraintlayout:constraintlayout:1.1.3&#x27;</span><span class="hljs-comment">//引用constrainlayout库</span><br>    testImplementation <span class="hljs-string">&#x27;junit:junit:4.12&#x27;</span><span class="hljs-comment">//指定单元测试编译用的版本号</span><br>    androidTestImplementation <span class="hljs-string">&#x27;androidx.test.ext:junit:1.1.1&#x27;</span><span class="hljs-comment">//指定安卓测试编译用的版本号</span><br>    androidTestImplementation <span class="hljs-string">&#x27;androidx.test.espresso:espresso-core:3.2.0&#x27;</span><span class="hljs-comment">//使用Espresso的进行测试的版本号</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>还有许多配置没有写出来。这里只是简单的了解一下，有需要的可以参考以下博客或者自行必应搜索。</p>
+<h5 id="build-gradle文件的注释"><a href="#build-gradle文件的注释" class="headerlink" title="build.gradle文件的注释"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhangmiao14/p/6888143.html">build.gradle文件的注释</a></h5><p>App的工程结构了解到此结束。</p>
+<blockquote>
+<p> Android Studio的部分使用方法</p>
+</blockquote>
+<p>&emsp;&amp;&amp;emspAndroid Studio是基于IDEA开发的，其大部分使用其实是和IDEA是差不多的。下面大致介绍一下Android Studio的框图。<br><img src="/img/docs/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%89%8D%E4%BD%A0%E9%9C%80%E8%A6%81%E4%BA%86%E8%A7%A3%E7%9A%84%E4%B8%80%E4%BA%9B%E8%B5%84%E6%96%99-%E4%B8%80/4.webp" srcset="/img/loading.gif" lazyload alt="loading-ag-714"><br>还有一些常用的快捷键:</p>
+<ul>
+<li>Ctrl+S : 保存文件</li>
+<li>Ctrl+Z ：撤销上次操作</li>
+<li>Ctrl+Shift+Z : 重做上一次编辑。</li>
+<li>Ctrl+Y：删除当前行</li>
+<li>Ctrl+C：复制</li>
+<li>Ctrl+X：剪切</li>
+<li>Ctrl+V：粘贴</li>
+<li>Ctrl+A：全选</li>
+<li>Delete：删除</li>
+<li>Ctrl+F：查询</li>
+<li>Ctrl+R：替换</li>
+<li>Ctrl+&#x2F;：注释选中的代码(采用&#x2F;&#x2F;注释)</li>
+<li>Ctrl+Shift+&#x2F;：注释选中的代码(采用&#x2F;**&#x2F;注释)</li>
+<li>Shift+F6：重命名</li>
+<li>Alt+Enter：给光标所在位置的类导入相应的包(推荐设置自动导入包)</li>
+<li>Shift+F10：运行当前模块</li>
+<li>Ctrl+F5:清理并重新运行当前模块</li>
+</ul>
+<p>以及一些常用的插件：</p>
+<ol>
+<li><p><a target="_blank" rel="noopener" href="http://plugins.jetbrains.com/plugin/7595?pr=androidstudio">Android Code Generator</a>：根据布局文件快速生成对应的Activity，Fragment，Adapter，Menu类。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="http://plugins.jetbrains.com/plugin/7275?pr=androidstudio">CodeGlance</a>：右边快速预览代码，实现快速定位。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/Skykai521/ECTranslation">ECTranslation</a>：翻译软件。</p>
+</li>
+</ol>
+<p>还有更多以及更常用的插件可以查看博客:<a target="_blank" rel="noopener" href="https://www.cnblogs.com/Awangzhen/p/8906335.html">Android Studio实用插件集合</a>。在此不再列出。(&#x3D;-&#x3D;主要是自己只使用了这三个。)</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Android/" class="category-chain-item">Android</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Android/" class="print-no-link">#Android</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>安卓开发 开发前你需要了解的一些资料(一)</div>
+      <div>https://lqzhi.github.io/2020/02/16/安卓开发前你需要了解的一些资料-一/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>LQZHI</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年2月16日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/02/24/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%89%8D%E4%BD%A0%E9%9C%80%E8%A6%81%E4%BA%86%E8%A7%A3%E7%9A%84%E4%B8%80%E4%BA%9B%E8%B5%84%E6%96%99-%E4%BA%8C/" title="安卓开发前你需要了解的一些资料(二)">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">安卓开发前你需要了解的一些资料(二)</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/02/14/%E5%88%9D%E6%AD%A5%E4%BA%86%E8%A7%A3%E5%AE%89%E5%8D%93%E5%92%8C%E9%85%8D%E7%BD%AE%E5%AE%89%E5%8D%93%E7%8E%AF%E5%A2%83/" title="初步了解安卓和配置安卓环境">
+                        <span class="hidden-mobile">初步了解安卓和配置安卓环境</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

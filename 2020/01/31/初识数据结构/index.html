@@ -1,0 +1,742 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/page/favicon.png">
+  <link rel="icon" href="/img/page/favicon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="LQZHI">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="数据结构是什么?      数据结构是相互之间存在着一种或多种关系的数据元素的集合和该集合中数据元素之间的关系组成 ，是计算机的存储、组织数据的方式。        在早期中，计算机主要是科学家们被用来数值计算。但如今，随着时代的发展，计算机已经除了用于数值计算，更多的是使用在处理字符、表格、图像、视频，音乐等多种具有一定结构的数据。而对于错综复杂的数据，只有对数据进行理性化的分析，合理化的处理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初识数据结构">
+<meta property="og:url" content="https://lqzhi.github.io/2020/01/31/%E5%88%9D%E8%AF%86%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:site_name" content="MY-BLOG">
+<meta property="og:description" content="数据结构是什么?      数据结构是相互之间存在着一种或多种关系的数据元素的集合和该集合中数据元素之间的关系组成 ，是计算机的存储、组织数据的方式。        在早期中，计算机主要是科学家们被用来数值计算。但如今，随着时代的发展，计算机已经除了用于数值计算，更多的是使用在处理字符、表格、图像、视频，音乐等多种具有一定结构的数据。而对于错综复杂的数据，只有对数据进行理性化的分析，合理化的处理">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E5%88%9D%E8%AF%86%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/1.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E5%88%9D%E8%AF%86%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/2.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E5%88%9D%E8%AF%86%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/3.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E5%88%9D%E8%AF%86%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/4.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E5%88%9D%E8%AF%86%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/5.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E5%88%9D%E8%AF%86%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/6.webp">
+<meta property="article:published_time" content="2020-01-31T05:34:57.000Z">
+<meta property="article:modified_time" content="2025-05-23T03:42:37.227Z">
+<meta property="article:author" content="LQZHI">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lqzhi.github.io/img/docs/%E5%88%9D%E8%AF%86%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/1.webp">
+  
+  
+  
+  <title>初识数据结构 - MY-BLOG</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"lqzhi.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>闻言的笔记本</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/page/Page.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="初识数据结构"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-01-31 13:34" pubdate>
+          2020年1月31日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          18 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">初识数据结构</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2025年5月23日 中午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>数据结构是什么?</p>
+</blockquote>
+<p>    <strong>数据结构是相互之间存在着一种或多种关系的数据元素的集合和该集合中数据元素之间的关系组成 ，是计算机的存储、组织数据的方式。</strong></p>
+<p>       在早期中，计算机主要是科学家们被用来数值计算。但如今，随着时代的发展，计算机已经除了用于数值计算，更多的是使用在处理字符、表格、图像、视频，音乐等多种具有一定结构的数据。而对于错综复杂的数据，只有对数据进行理性化的分析，合理化的处理，才能对其有效的处理。而数据结构，就是对数据的一种合理化分析所的出的结论。<em><strong>合理的数据结构对于数据的分析，处理具有极大的帮助。</strong></em></p>
+<blockquote>
+<p><strong>基本概念与术语</strong></p>
+</blockquote>
+<p>    1.<strong>数据(Data) :</strong> 数据是指对客观事件进行记录并可以鉴别的符号，是对客观事物的性质、状态以及相互关系等进行记载的物理符号或这些物理符号的组合。它是可识别的、抽象的符号。</p>
+<p>(***数据是客观的表现。是所有能够输入到计算机中并被计算机程序所处理的符号的总称。***例如一张成绩表，就是对成绩的一种客观表现，我们可以通过成绩表，清楚的了解到各科学生的成绩)</p>
+<p>    2.**数据元素(Data Element):**数据元素是数据的基本单位，有时也被称作为结点或记录。在计算机中，通常作为一个整体进行考虑和处理。</p>
+<p>（***数据元素是数据的基本单位，数据是由有众多的数据元素组成的。***例如成绩表是由各个学生的成绩所组成。单个学生的成绩就是数据元素，而成绩表就是数据。）</p>
+<p>    3.**数据项(Data Item):**数据项是组成数据元素的，具有独立意义的，不可分割的最小单位。数据项通常用于表示实体的某种属性。</p>
+<p>（**数据项是数据的最小单位，具有独立意义且不可分割性。通常是用于表示实体的某种属性。**例如，在成绩表中，学生们单个的成绩就是数据项，语文成绩，数学成绩，等等。这些成绩具有独立的意义，能够表示一名学生的某科的成绩属性。且具有不可分割性。）</p>
+<p>    4.**数据对象(Data Object):**数据对象是性质相同的数据元素的集合。是数据的一个子集。</p>
+<p>（**数据对象是性质相同的数据元素的集合。**例如，在一张成绩表中，具有学生的学号和姓名已经班级等信息，还包含学生的各项成绩以及各种平均成绩和排名。那么可以说成绩表中(数据)是由学生的基本信息（数据对象）和学生的成绩（数据对象）组成。因为数据对象是数据元素的集合，而数据元素是数据的基本单位，所以并不矛盾。）</p>
+<p>    4种有关数据基本概念如图：</p>
+<p><img src="/img/docs/%E5%88%9D%E8%AF%86%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/1.webp" srcset="/img/loading.gif" lazyload></p>
+<p>数据的基本概念</p>
+<blockquote>
+<p>数据结构的两种层次</p>
+</blockquote>
+<p>        <strong>数据结构包括逻辑结构和存储结构两个层次。</strong></p>
+<p><strong>逻辑结构：</strong></p>
+<p>        数据的逻辑结构是从数据的逻辑关系上进行描述数据。它与数据的存储无关，是独立与计算机的。是将具体问题抽象出来的数学模型。</p>
+<p>        逻辑结构拥有两个要素：<strong>数据元素</strong>和<strong>关系</strong>。</p>
+<p>        数据元素是数据的基本单位，而关系是指数据元素之间的逻辑关系。根据数据元素之间关系的不同特性，通常可以分为四类基础结构。</p>
+<p>        <strong>集合结构：<strong>集合结构是一种松散的结构。该结构使得数据</strong>除了“属于同一种集合”的关系</strong>外，无其它关系。</p>
+<p><img src="/img/docs/%E5%88%9D%E8%AF%86%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/2.webp" srcset="/img/loading.gif" lazyload>  </p>
+<p>集合结构  </p>
+<p>        <strong>线性结构：<strong>线性结构是一个有序数据元素的集合。该结构</strong>存在一对一的关系</strong>。</p>
+<p><img src="/img/docs/%E5%88%9D%E8%AF%86%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/3.webp" srcset="/img/loading.gif" lazyload>  </p>
+<p>线性结构  </p>
+<p>        <strong>树结构：<strong>树结构是一种将数据元素按分支关系组织起来的结构。该结构</strong>存在一对多的关系</strong>。</p>
+<p><img src="/img/docs/%E5%88%9D%E8%AF%86%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/4.webp" srcset="/img/loading.gif" lazyload>  </p>
+<p>树结构</p>
+<p>        **图结构：**图结构是一种比树更加复杂的结构，该结构的任意两个结点都有可能具有关联性。<strong>存在多对多的关系。</strong></p>
+<p><img src="/img/docs/%E5%88%9D%E8%AF%86%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/5.webp" srcset="/img/loading.gif" lazyload>  </p>
+<p>图结构  </p>
+<p>在四种基本结构中，可以分为线性结构和非线性结构。整体如下：</p>
+<p><img src="/img/docs/%E5%88%9D%E8%AF%86%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/6.webp" srcset="/img/loading.gif" lazyload>  </p>
+<p>逻辑姐层次图  </p>
+<p>        线性结构包含：线性表，数组，栈，队列，串，广义表。</p>
+<p>        非线性结构包含：树，图，集合。（树有常见的二叉树，森林，B树，B-\B+树等等，图分为有向图和无向图）。</p>
+<p><strong>存储结构：</strong></p>
+<p>        数据对象在计算机中的存储表达成为数据的<strong>存储结构</strong>。对于计算机的任何数据，无论是什么形式，都是以二进制存储的。而在内存条是一维线性结构，数据的处理都是在内存条中进行的。所以，数据的存储结构可以分为<strong>顺序存储</strong>和<strong>链式存储</strong>。</p>
+<p><strong>顺序存储</strong>：所有的数据元素依次存放在一片连续的内存空间中，通过相对位置来形成联系。是连续的存储方式。通常是以数组的形式进行表示。</p>
+<p><strong>链式存储</strong>：所有的数据元素通过结点的附加空间的指针字段来形成联系。数据元素在内存中的数据通常是不连续的。是不连续的存储方式。通常是以链表的形式进行表示。</p>
+<p>（数据结构是将具体问题抽象化后，寻找出其相对应的数据元素以及数据元素之间的关系。再对其考虑是使用顺序存储还是用链式存储。<strong>注意：逻辑结构中的关系与存储结构没有关系。线性结构既可以使用存储结构，也可以使用链式存储，非线性结构也是一样。</strong>）</p>
+<blockquote>
+<p>数据类型和抽象数据类型</p>
+</blockquote>
+<p>**数据类型（Data Type）：**数据类型是高级程序设计语言中的一个基本概念。是一个值的集合和定义在这个值集上面的一组操作的总称。</p>
+<p>（数据类型一般在程序设计语言中都有着其基本的数据类型，再由这些基本数据类型构成复杂的数据类型。）</p>
+<p>**抽象数据类型（Abstract Data Type）:**一般是值用户定义的，表示应用问题的数学模型。具体包括三部分：数据对象，数据对象上关系的集合以及数据对象的基本操作的集合。</p>
+<p>抽象数据类型的定义格式如下：</p>
+<p><strong>ADT 抽象数据类型名{</strong></p>
+<p>    <strong>数据对象:(数据对象的定义)</strong></p>
+<p>    <strong>数据关系:(数据关系的定义)</strong></p>
+<p>    <strong>基本操作:(基本操作的定义)</strong></p>
+<p><strong>}ADT 抽象数据类型名</strong></p>
+<p><strong>抽象数据类型的概念与面向对象的方法的思想是一致的。</strong></p>
+<blockquote>
+<p>总结</p>
+</blockquote>
+<p>数据结构是一门综合性的学科。其具有一定的抽象性，是将现实生活中各种各样的数据进行抽象化，使用不同的数据结构用来对现实世界模拟。</p>
+<p>反正数据结构肯定是很重要的就对了。毕竟：数据结构+算法&#x3D;程序 嘛。</p>
+<p>（嘻嘻，本次记录借鉴了严蔚敏的数据结构C语言版，是由人民邮电出版社出版的。同时也有部分参考了百度百科上面的j。数据结构与算法对于IT专业来说，考研应该是必须的。这一次记录让我对与数据结构再一次学习了一下。也对自己的数据结构的知识有了一定的认识。感觉自己又学到许多。）</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="category-chain-item">数据结构</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="print-no-link">#数据结构</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>初识数据结构</div>
+      <div>https://lqzhi.github.io/2020/01/31/初识数据结构/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>LQZHI</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年1月31日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/01/31/%E8%AE%A4%E8%AF%86%E7%AE%97%E6%B3%95/" title="认识算法">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">认识算法</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/01/30/JAVA%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85/" title="JAVA环境安装(1.8示例)">
+                        <span class="hidden-mobile">JAVA环境安装(1.8示例)</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

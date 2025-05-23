@@ -1,0 +1,735 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/page/favicon.png">
+  <link rel="icon" href="/img/page/favicon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="LQZHI">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前言  &emsp;&emsp;要盗取WIFI，我们首先要了解WIFI。&emsp;&emsp;WIFI(Wireless-Fidelity)是一种无线通信网络。其遵循的是IEEE 802.11协议。(有兴趣的可以了解一下 :IEEE 802.11协议基础知识整理)。  说明  &emsp;&emsp;本篇文章只是用来学习使用。不可转载和不可用于违法之事。天网恢恢，疏而不漏。自己犯下的错误，终究">
+<meta property="og:type" content="article">
+<meta property="og:title" content="黑客技术-盗取WIFI密码(二)">
+<meta property="og:url" content="https://lqzhi.github.io/2020/02/09/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF-%E7%9B%97%E5%8F%96WIFI%E5%AF%86%E7%A0%81-%E4%BA%8C/index.html">
+<meta property="og:site_name" content="MY-BLOG">
+<meta property="og:description" content="前言  &emsp;&emsp;要盗取WIFI，我们首先要了解WIFI。&emsp;&emsp;WIFI(Wireless-Fidelity)是一种无线通信网络。其遵循的是IEEE 802.11协议。(有兴趣的可以了解一下 :IEEE 802.11协议基础知识整理)。  说明  &emsp;&emsp;本篇文章只是用来学习使用。不可转载和不可用于违法之事。天网恢恢，疏而不漏。自己犯下的错误，终究">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF-%E7%9B%97%E5%8F%96WIFI%E5%AF%86%E7%A0%812/1.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF-%E7%9B%97%E5%8F%96WIFI%E5%AF%86%E7%A0%812/2.webp">
+<meta property="article:published_time" content="2020-02-09T11:01:17.000Z">
+<meta property="article:modified_time" content="2025-05-23T03:42:37.234Z">
+<meta property="article:author" content="LQZHI">
+<meta property="article:tag" content="黑客技术">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lqzhi.github.io/img/docs/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF-%E7%9B%97%E5%8F%96WIFI%E5%AF%86%E7%A0%812/1.webp">
+  
+  
+  
+  <title>黑客技术-盗取WIFI密码(二) - MY-BLOG</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"lqzhi.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>闻言的笔记本</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/page/Page.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="黑客技术-盗取WIFI密码(二)"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-02-09 19:01" pubdate>
+          2020年2月9日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          21 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">黑客技术-盗取WIFI密码(二)</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2025年5月23日 中午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>前言</p>
+</blockquote>
+<p>&emsp;&emsp;<strong>要盗取WIFI，我们首先要了解WIFI。</strong><br>&emsp;&emsp;WIFI(Wireless-Fidelity)是一种无线通信网络。其遵循的是<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/IEEE%20802.11/8447947?fr=aladdin">IEEE 802.11</a>协议。(有兴趣的可以了解一下 :<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_36178668/article/details/93622454">IEEE 802.11协议基础知识整理</a>)。</p>
+<blockquote>
+<p>说明</p>
+</blockquote>
+<p>&emsp;&emsp;本篇文章只是用来学习使用。不可转载和不可用于违法之事。天网恢恢，疏而不漏。自己犯下的错误，终究要自己承担。</p>
+<blockquote>
+<p>盗取WIFI前需要了解的一些东西</p>
+</blockquote>
+<p><strong>（WiFI是WLAN的一种标准，WIFI通常是短距离的，而WLAN是无线网络网，范围覆盖面更广。）</strong><br>&emsp;&emsp;<strong>WLAN主要由站(Station，STA)、接入点(Access Point，AP)、无线介质( Wireless Medium，WM)和分布式系统(Wireless Distribution System，WDS)组成。</strong><br>(下面是个人理解。不太专业。嘻嘻)</p>
+<p>AP:也就是无线接入点。其是无线网络的创造者，也是网络的中心节点。可以理解成发送信号的东西。例如，路由器,手机(热点),电脑等。</p>
+<p>STA:每一个连接到信号的终端设备。例如，手机，路由器,电脑等。</p>
+<p>(AP模式中，路由器为一级路由器，直接连接网线。手机和电脑分别处于开着热点的状态。)<br>(STA模式中,路由器一般为二级路由器及其以下的路由器,通过无线或有线来继承上一级路由器的网络。手机和电脑都为连接WLAN的终端设备。)</p>
+<p>WM：无线介质，网络通过无线介质进行传播。常用的由无线电波、微波和红外线。<br>WDS：无线分布式系统。</p>
+<p>(WDS简单来讲，就是可以让无线网络进行桥接(中继)，且不影响其它AP覆盖的能力。最常用的就是WIFI放大器。)</p>
+<p>好了。基本上懂了WLAN的4大组成。我们再了解一些其它的名称:<br>&emsp;&emsp;1.SSID(Service Set Identifier,服务集标识) ：SSID技术可以将一个无线局域网分为几个需要不同身份验证的子网络，每一个子网络都需要独立的身份验证，只有通过身份验证的用户才可以进入相应的子网络，防止未被授权的用户进入本网络。来自<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/SSID/10823867?fr=aladdin">百度百科-SSID</a>（通俗的来说，就是你的WIFI名字。一个路由器可以设置多个SSID，允许用户连接到不同的网络中。当然，实际上所有的用户还是连接到了同一个无线网络，只是各一组SSID的用户都是分开的而已，互不相通。网络数据是隔开的。）<br>&emsp;&emsp;2.Wireless channel(无线信道):无线信道可以看作是发送端(AP)到接收端(STA)的一种无形的传输通道。是信号传输的媒介。其中根据各国标准制定的不同，信道个数也有不同。</p>
+<table>
+<thead>
+<tr>
+<th align="center">地区</th>
+<th align="center">信道</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">北美&#x2F;FCC</td>
+<td align="center">2.412-2.461GHz(11信道)</td>
+</tr>
+<tr>
+<td align="center">欧洲&#x2F;ETSI</td>
+<td align="center">2.412-2.472GHz(13信道)</td>
+</tr>
+<tr>
+<td align="center">中国&#x2F;</td>
+<td align="center">2.412-2.472GHz(13信道)</td>
+</tr>
+<tr>
+<td align="center">日本&#x2F;ARIB</td>
+<td align="center">2.412-2.484GHz(14信道）</td>
+</tr>
+</tbody></table>
+<p>&emsp;&emsp;3.IP地址(Internet Protocol,网际互连协议):是TCP&#x2F;IP体系中的网络层协议.通常当一个STA终端连接上AP时，AP会分配一个IP地址给终端。当网络数据需要路由转发时，如果目标主机与本地路由器之间连接，即直接将数据包扔给目标主机。(直接交付)否则，路由器将会查询路由表查找路由信息，并将数据包转交给指明的下一跳路由器。(间接交付)<br>(IP地址用于网络传输。网络的传输的数据包需要到哪里去主要是通过IP地址来查询的。)<br>&emsp;&emsp;4.MAC地址(Media Access Control Address，媒体存取控制位址):也称局域网地址(LAN Address），MAC位址，以太网地址（Ethernet Address）或物理地址（Physical Address）。它是一个用来确认网络设备位置的位址。在<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/OSI%E6%A8%A1%E5%9E%8B">OSI模型</a>中，第三层网络层负责<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/IP%E5%9C%B0%E5%9D%80">IP地址</a>，第二层数据链路层则负责MAC位址<sup> [1]</sup>  。MAC地址用于在网络中唯一标示一个<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%BD%91%E5%8D%A1">网卡</a>，一台设备若有一或多个网卡，则每个网卡都需要并会有一个唯一的MAC地址。来自<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/MAC%E5%9C%B0%E5%9D%80/1254181?fr=aladdin">百度百科-MAC地址</a>。<br>(MAC地址主要是确定网络设备位置。一张网卡会用一个MAC地址。其通常由厂家分配并烧录到网卡芯片中的，具有全球唯一性，和人的指纹一样可以作为网卡识别以及底层物理传输中识别主机的重要信息。一般来说，其不能更改，但是，还是可以通过一些技术来修改MAC地址。)<br>&emsp;&emsp;5.网关(Gateway):又称网间连接器、协议转换器。网关主要用于高层不同协议的连接。通俗来讲，网关就是一个网络连接另外一个网络的门。<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%BD%91%E5%85%B3/98992?fr=aladdin">百度百科-网关</a>。<br>（网关起到的就是桥梁的作用。数据包会经过网关。）</p>
+<blockquote>
+<p>盗取WIFI密码(五):利用arp欺骗</p>
+</blockquote>
+<p>&emsp;&emsp;ARP是什么？<br>ARP(Address Resolution Protocol):地址解析协议。将IP地址转换成MAC地址，以此来确定网络设备。注意一点：ARP协议是建立在网络中各个主机互相信任的基础上的。(<strong>网络设备之间的互相通信并不是通过IP地址来确定，而是MAC地址。每台主机都又一个ARP缓存表，记录着IP地址所对应的MAC地址。</strong>)<br><img src="/img/docs/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF-%E7%9B%97%E5%8F%96WIFI%E5%AF%86%E7%A0%812/1.webp" srcset="/img/loading.gif" lazyload alt="APR通信.png"><br>&emsp;&emsp;什么是ARP欺骗呢？<br>很简单。假设有终端A,终端B和网关C。当数据包要从A发生给B时，A会先发生数据包给网关C，然后网关C再把数据发生给B。这时候，我们可以利用自己的电脑，‘假扮’网关C，获取A的数据后，经过修改，再发送给B。<br><img src="/img/docs/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF-%E7%9B%97%E5%8F%96WIFI%E5%AF%86%E7%A0%812/2.webp" srcset="/img/loading.gif" lazyload alt="ARP双向欺骗.png"><br>APR的单向欺骗也很简单，只要我们发送一个伪造返回包给A(IP地址是网关的IP地址，MAC为我们的MAC地址)。这样，A会把数据返回给我们，而网关还是会把数据包给A。就是指，A只能接受数据，不能发送数据给别人(因为我们拦截了。)<br>（推荐博客 :<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/d6f84e2e88c6">中间人攻击——ARP欺骗的原理、实战及防御</a>）</p>
+<blockquote>
+<p>如何利用ARP欺骗盗取WIFI密码呢？</p>
+</blockquote>
+<p>三步：<br>1.引诱他人连接我们的wifi<br>2.arp欺骗。<br>3.发送伪造网站，让他人输入WIFI密码。</p>
+<h5 id="注意！请不要随意在网站上输入密码。"><a href="#注意！请不要随意在网站上输入密码。" class="headerlink" title="(注意！请不要随意在网站上输入密码。)"></a>(注意！请不要随意在网站上输入密码。)</h5><p>第一步：因为ARP欺骗的前提是，在同一个局域网内才可以生效。这时候我们又不知道WIFI密码，没办法进入到局域网中。这时候怎么办呢？很简单，让他们连接我们的WIFI。(<strong>所以，注意不要随便连接WIFI！！</strong>)<br><br><strong>引诱他人连接WIFI</strong><br>首先：我们要进行无线DOS攻击。让其WIFI无法连接。(WIFI杀手)<br>(无线DOS攻击的相关资料:<a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/wireless/135598.html">常见无线DOS攻击</a>,可以使用Aircrack-ng进行DoS攻击，在此处不在说明。)<br>然后,我们再开一个SSID和目标SSID一样的热点WIFI。这样，便可以让他人连接我们的WIFI。<br><br>第二步：进行arp欺骗。<br>介绍一个工具:arpspoof<br>（因为自己很久没搞过了。忘掉差不多了。当时是使用Kail Linux进行的。现在懒得安装了。所以，我也就不展示了。等自己无聊再搞一个视频上来。）<br>arp欺骗博客:# <a target="_blank" rel="noopener" href="https://www.cnblogs.com/xcj26/articles/6073411.html">使用ARP欺骗, 截取局域网中任意一台机器的网页请求,破解用户名密码等信息</a>。</p>
+<p>第三步：利用arp发送伪造网站。(可以发送一个路由器更新的网站。骗一般人没问题。)然后成功获取Wifi密码。<br>(注意：请不要使用arp欺骗去做违法之事。)</p>
+<blockquote>
+<p>盗取WIFI密码(六):利用Aircrack-ng工具</p>
+</blockquote>
+<p><strong>Aircrack-ng</strong>是一个与<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/802.11">802.11</a>标准的无线网络分析有关的安全软件，主要功能有：网络侦测，数据包嗅探，<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/WEP">WEP</a>和<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/WPA">WPA</a>&#x2F;WPA2-PSK破解。(<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/aircrack-ng/7661805?fr=aladdin">百度百科- Aircrack-ng</a>)<br>(&#x3D;-&#x3D;同上。没有安装Kail Linux。所以没有这个软件。而且，我下载了它的Windows版本。发现好像要搭配一个驱动dll。因为aircrack-ng需要无线网卡。所以，在此也不再展示了。)<br>aircrack-ng盗取WIFI主要有以下几步。<br>1.切换无线网网卡模式为监听模式。<br>2.搜索AP信号<br>3.监听WIFI，尝试抓取wifi握手包。<br>4.发送攻击，连接的终端断线。<br>5.抓取成功后，跑字典破解(这边最难，看WIFI密码难度而定。如果WIFI密码复杂，那就别想了。<br>（如何使用aircrack-ng破解WIFI密码推荐博客:<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36119192/article/details/84254622">Aircrack-ng破解无线WIFI密码</a></p>
+<blockquote>
+<p>盗取WIFI密码(七)：其它工具</p>
+</blockquote>
+<p>其实破解WIFI密码的工具还有很多，像Beini（奶瓶）、BackTrack5都可以破解WIFI。所以，多多必应即可呀。</p>
+<blockquote>
+<p>个人后话</p>
+</blockquote>
+<p>盗取WIFI这件事，当WIFI密码设置很复杂时，WIFI密码根本就破解不了。<br>这是WIFI的几种加密方式：<a target="_blank" rel="noopener" href="https://blog.csdn.net/iteye_19603/article/details/82363931">wifi 的几种加密方式</a>。<br>通常现在的WIFI都是WPA-PSK+WPA2-PSK。密码好像只能通过跑字典了。但是字典并不是那么好跑的。除非密码是123456。<br>其实这种技术并不能算是黑客技术。只能说是脚本小子。一个真正的黑客，往往需要掌握大量的底层知识，对操作系统以及各种协议都是了如指掌的。那是多么庞大的知识量啊。自己还是算了吧。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF/" class="category-chain-item">黑客技术</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF/" class="print-no-link">#黑客技术</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>黑客技术-盗取WIFI密码(二)</div>
+      <div>https://lqzhi.github.io/2020/02/09/黑客技术-盗取WIFI密码-二/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>LQZHI</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年2月9日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/02/14/%E5%88%9D%E6%AD%A5%E4%BA%86%E8%A7%A3%E5%AE%89%E5%8D%93%E5%92%8C%E9%85%8D%E7%BD%AE%E5%AE%89%E5%8D%93%E7%8E%AF%E5%A2%83/" title="初步了解安卓和配置安卓环境">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">初步了解安卓和配置安卓环境</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/02/08/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF-%E7%9B%97%E5%8F%96WIFI%E5%AF%86%E7%A0%81-%E4%B8%80/" title="黑客技术-盗取WIFI密码(一)">
+                        <span class="hidden-mobile">黑客技术-盗取WIFI密码(一)</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

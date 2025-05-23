@@ -1,0 +1,775 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/page/favicon.png">
+  <link rel="icon" href="/img/page/favicon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="LQZHI">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前言            有点无聊&#x3D;-&#x3D;。本来不行更新的。谁知道自己参加了日更活动。不更不行啊。可是又没有时间接着写数据结构(因为现在已经17点54分了。)所以，打算就把自己以前因为宿舍没有Wifi。而去苦学的Wifi盗取技术(我只是学了一部分)。因为这是我自己自学的。所以讲的不好请不要介意。盗取Wifi我会分成2个部分。一个是技术含量少一点的。一个是需要一些技术含量和了解">
+<meta property="og:type" content="article">
+<meta property="og:title" content="黑客技术-盗取WIFI密码(一)">
+<meta property="og:url" content="https://lqzhi.github.io/2020/02/08/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF-%E7%9B%97%E5%8F%96WIFI%E5%AF%86%E7%A0%81-%E4%B8%80/index.html">
+<meta property="og:site_name" content="MY-BLOG">
+<meta property="og:description" content="前言            有点无聊&#x3D;-&#x3D;。本来不行更新的。谁知道自己参加了日更活动。不更不行啊。可是又没有时间接着写数据结构(因为现在已经17点54分了。)所以，打算就把自己以前因为宿舍没有Wifi。而去苦学的Wifi盗取技术(我只是学了一部分)。因为这是我自己自学的。所以讲的不好请不要介意。盗取Wifi我会分成2个部分。一个是技术含量少一点的。一个是需要一些技术含量和了解">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF-%E7%9B%97%E5%8F%96WIFI%E5%AF%86%E7%A0%811/1.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF-%E7%9B%97%E5%8F%96WIFI%E5%AF%86%E7%A0%811/2.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF-%E7%9B%97%E5%8F%96WIFI%E5%AF%86%E7%A0%811/3.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF-%E7%9B%97%E5%8F%96WIFI%E5%AF%86%E7%A0%811/4.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF-%E7%9B%97%E5%8F%96WIFI%E5%AF%86%E7%A0%811/5.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF-%E7%9B%97%E5%8F%96WIFI%E5%AF%86%E7%A0%811/6.webp">
+<meta property="article:published_time" content="2020-02-08T12:29:35.000Z">
+<meta property="article:modified_time" content="2025-05-23T03:42:37.233Z">
+<meta property="article:author" content="LQZHI">
+<meta property="article:tag" content="黑客技术">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lqzhi.github.io/img/docs/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF-%E7%9B%97%E5%8F%96WIFI%E5%AF%86%E7%A0%811/1.webp">
+  
+  
+  
+  <title>黑客技术-盗取WIFI密码(一) - MY-BLOG</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"lqzhi.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>闻言的笔记本</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/page/Page.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="黑客技术-盗取WIFI密码(一)"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-02-08 20:29" pubdate>
+          2020年2月8日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          14 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">黑客技术-盗取WIFI密码(一)</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2025年5月23日 中午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>前言</p>
+</blockquote>
+<p>          有点无聊&#x3D;-&#x3D;。本来不行更新的。谁知道自己参加了日更活动。不更不行啊。可是又没有时间接着写数据结构(因为现在已经17点54分了。)所以，打算就把自己以前因为宿舍没有Wifi。而去苦学的Wifi盗取技术(我只是学了一部分)。因为这是我自己自学的。所以讲的不好请不要介意。盗取Wifi我会分成2个部分。一个是技术含量少一点的。一个是需要一些技术含量和了解的。(今天的技术含量少不代表没有技术含量。)</p>
+<hr>
+<blockquote>
+<p>说明</p>
+</blockquote>
+<h4 id="本篇文章只是用来学习使用。不可转载和不可用于违法之事。天网恢恢，疏而不漏。自己犯下的错误，终究要自己承担。"><a href="#本篇文章只是用来学习使用。不可转载和不可用于违法之事。天网恢恢，疏而不漏。自己犯下的错误，终究要自己承担。" class="headerlink" title="本篇文章只是用来学习使用。不可转载和不可用于违法之事。天网恢恢，疏而不漏。自己犯下的错误，终究要自己承担。"></a>本篇文章只是用来学习使用。不可转载和不可用于违法之事。天网恢恢，疏而不漏。自己犯下的错误，终究要自己承担。</h4><hr>
+<blockquote>
+<p>盗取WiFI密码(一)</p>
+</blockquote>
+<p>直接找主人问(<strong>强烈推荐。没什么技术含量。</strong>)</p>
+<hr>
+<blockquote>
+<p>盗取WiFI密码(二)</p>
+</blockquote>
+<p>当你爱要面子或者主人不在时，你可以选择使用万能WiFi钥匙破解。也可以使用Wifi钥匙破解也行。再不济也可以使用腾讯Wifi管家。反正到处找Wifi破解软件就行。</p>
+<hr>
+<blockquote>
+<p>盗取WiFI密码(三)</p>
+</blockquote>
+<p>前面两个或许没有什么技术含量。那么。让我们来一点技术含量的。</p>
+<p><strong>首先，准备一个CD-ROM U盘(容量随便)；</strong></p>
+<p>然后。让我们了解我们该如何用CD-ROM U盘盗取WiFi。</p>
+<p>（在使用该方法时。有两大前提！一：你得让你的U盘能够插入到连接有WIFI的Windows电脑。二：没有关闭U盘的自动播放功能。）</p>
+<p><strong>在U盘中设置好我们的盗取WIFI程序。然后再想个办法插入到电脑中去。</strong>(是不是很像电影里面的黑客大佬，U盘一插，整个系统都崩溃了。)</p>
+<p>好了。就是这么简单。那么。<strong>重点是<em>如何制作WIFI盗取程序呢？制作成功了又如何运行呢？</em></strong></p>
+<blockquote>
+<p><strong>解决自动运行(Windows环境下)：Autorun.inf文件</strong></p>
+</blockquote>
+<p>Autorun.inf文件是什么文件呢?</p>
+<p><strong>Autorun.inf原本是在Windows下用来对光盘播放操作的一种文件。例如:插入某光盘时能够自动运行安装程序。这就得归功于Autorun.inf文件。</strong></p>
+<p><strong>在<a href="%5Bautorun.inf_%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91%5D(https://baike.baidu.com/item/autorun.inf/10548193?fr=aladdin)">百度百科</a>:<em>autorun.inf是我们电脑使用中比较常见的文件之一 ，其作用是允许在双击<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%A3%81%E7%9B%98/2842227">磁盘</a>时自动运行指定的某个文件。但是近几年出现了用autorun.inf文件传播<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%9C%A8%E9%A9%AC/530">木马</a>或病毒，它通过使用者的误操作让<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%9B%AE%E6%A0%87%E7%A8%8B%E5%BA%8F/8082041">目标程序</a>执行，达到侵入电脑的目的，带来了很大的负面影响。(请不要去传播病毒。)</em></strong></p>
+<p>Autofun.inf制作:</p>
+<p>Autofun.inf主要有三大部分:</p>
+<p>[AutoRun];</p>
+<p>[AutoRun.Alpha];</p>
+<p>[DeviceInstall];</p>
+<p>其中，[AutoRun]适用于Windows 95以上版本的系统与32位以上的CD-ROM。[AutoRun.Alpha]适用与基于RISC(精简指令集计算机)的计算机光驱以及Windows NT 4.0以上系统版本.[DeviceInstall]适用于Windows XP以上系统。</p>
+<p>其中[AutoRun]为必选项。[AutoRun.Alpha]和[DeviceInstall]为可选项。</p>
+<p>下面大致上讲解一下Autofun.inf的文件参数:</p>
+<p><strong>1.DefaultIcon : 指定应用程序的默认图标。</strong></p>
+<p><strong>2.Icon:指定设备显示图标</strong></p>
+<p><strong>3.Label：指定设备描述</strong></p>
+<p><strong>4.Open:指定启用该设备时运行的命令行(我们待会就用这个。)</strong></p>
+<p><strong>5.ShellExecute:指定启用该设备时运行的文件</strong></p>
+<p><strong>6.Shell 关键字 Command：定义设备右键快捷菜单执行命令行</strong></p>
+<p><strong>7.Shell 关键字:定义设备右键快捷菜单文本</strong></p>
+<p><strong>8.Shell:定义设备启用时运行的设备右键快捷菜单命令。</strong></p>
+<p>*我们如何使用这些呢？举个栗子：</p>
+<p><em><strong>修改U盘图标</strong></em></p>
+<p>在U盘的主目录下创建一个autorun.inf文件和一个.ico图标文件。(图标文件自己去下载.需要是ico的。也可以是安装文件。我放的是360的安装文件可以隐藏)。在文件中这样写道:</p>
+<p><img src="/img/docs/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF-%E7%9B%97%E5%8F%96WIFI%E5%AF%86%E7%A0%811/1.webp" srcset="/img/loading.gif" lazyload>  </p>
+<p>autorun.inf</p>
+<p><img src="/img/docs/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF-%E7%9B%97%E5%8F%96WIFI%E5%AF%86%E7%A0%811/2.webp" srcset="/img/loading.gif" lazyload>  </p>
+<p>U盘主目录</p>
+<p><img src="/img/docs/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF-%E7%9B%97%E5%8F%96WIFI%E5%AF%86%E7%A0%811/3.webp" srcset="/img/loading.gif" lazyload>  </p>
+<p>打开后的样子</p>
+<p><strong>好了。自动运行解决了。接下来就是如何编写软件了。</strong></p>
+<p><strong>在编写软件之前。我先放出几个命令行指令；</strong></p>
+<blockquote>
+<p>&#x2F;&#x2F; 列出所有可用wifi</p>
+<p>netsh wlan show networks mode&#x3D;bssid</p>
+<p>&#x2F;&#x2F; 添加配置文件</p>
+<p>netsh wlan add profile filename&#x3D;FILE_NAME</p>
+<p>&#x2F;&#x2F; 连接wifi</p>
+<p>netsh wlan connect name&#x3D;SSID_NAME</p>
+<p>&#x2F;&#x2F; 导出配置文件</p>
+<p>netsh wlan export profile key&#x3D;clear</p>
+<p>&#x2F;&#x2F; 列出配置文件</p>
+<p>netsh wlan show profile</p>
+<p>&#x2F;&#x2F; 删除配置文件</p>
+<p>netsh wlan delete profile name&#x3D;FILE_NAME</p>
+<p>&#x2F;&#x2F; 列出接口</p>
+<p>netsh wlan show interface</p>
+<p>&#x2F;&#x2F; 开启接口</p>
+<p>netsh interface set interface “Interface Name” enabled</p>
+</blockquote>
+<p>这些是Windows下的命令行。</p>
+<p>我们可以使用这些命令行帮我们解决导出WIFI密码的问题。其中，最好用的便是netsh wlan export profile key&#x3D;clear(导出配置文件)。</p>
+<p>我们在U盘其它目录下，写一个bat(批命令处理).将netsh wlan export profile key&#x3D;clear直接复制进去。然后保存，退出。</p>
+<p><img src="/img/docs/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF-%E7%9B%97%E5%8F%96WIFI%E5%AF%86%E7%A0%811/4.webp" srcset="/img/loading.gif" lazyload>  </p>
+<p>批命令处理</p>
+<p>然后用AutoRun.inf执行该文件后，你就会发现，在该目录下多出几个文件。</p>
+<p><img src="/img/docs/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF-%E7%9B%97%E5%8F%96WIFI%E5%AF%86%E7%A0%811/5.webp" srcset="/img/loading.gif" lazyload>  </p>
+<p>执行后</p>
+<p>每个文件就是单个WIFI的配置。</p>
+<p><img src="/img/docs/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF-%E7%9B%97%E5%8F%96WIFI%E5%AF%86%E7%A0%811/6.webp" srcset="/img/loading.gif" lazyload>  </p>
+<p>WIFI.xml</p>
+<p>没错。这样，你就可以偷到WIFI了。</p>
+<p>可是</p>
+<blockquote>
+<p><strong>当用户使用包含autorun.inf文件的USB设备、网络共享或其它非CD&#x2F;DVD媒体时，系统不会执行自动运行。</strong></p>
+</blockquote>
+<p>梦想总是好的。现实可是很残酷。目前这个方法我一直没有成功过。为什么呢？因为autorun.inf一般在电脑里面，大家都关闭了这个功能。所以。&#x3D;-&#x3D;没用。但是好歹也是自己的一个想法，而且上面的命令行也比较好使用。(看Wifi密码挺不错的。)</p>
+<p>当然，你也可以插进去后。以迅雷不及掩耳直接运行net.bat。然后快速拔下来。Wifi密码也是可以被偷到的。</p>
+<p>哈哈哈哈哈哈哈哈。其实吧，这并不能算是黑客技术。毕竟只是进行了批命令处理而已。</p>
+<p>不过呢，当你可以触碰到电脑时，你完全可以写一个修改注册表，自动运行，每时每刻检测系统Wifi是否被修改，用Socket作为连接的软件(这可以说是病毒了)。运行之后隐藏起来之类的。这样Wifi也可以算是偷到了。但是我估计这以及触碰法律了。</p>
+<p>编程是一件快乐的事情。但是当使用编程来做坏事时，它就不快乐了。</p>
+<p>明天可以说一下真正的黑客技术，盗取WiFI密码。利用网络攻击进行抓包处理。然后跑字典。或者arp欺骗，直接让主人傻兮兮的输入密码的那种。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF/" class="category-chain-item">黑客技术</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF/" class="print-no-link">#黑客技术</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>黑客技术-盗取WIFI密码(一)</div>
+      <div>https://lqzhi.github.io/2020/02/08/黑客技术-盗取WIFI密码-一/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>LQZHI</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年2月8日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/02/09/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF-%E7%9B%97%E5%8F%96WIFI%E5%AF%86%E7%A0%81-%E4%BA%8C/" title="黑客技术-盗取WIFI密码(二)">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">黑客技术-盗取WIFI密码(二)</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/02/06/%E7%BA%BF%E6%80%A7%E8%A1%A8%E7%9A%84%E9%93%BE%E5%BC%8F%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84/" title="线性表的链式存储结构">
+                        <span class="hidden-mobile">线性表的链式存储结构</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

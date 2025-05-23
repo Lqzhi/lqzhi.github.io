@@ -1,0 +1,763 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/page/favicon.png">
+  <link rel="icon" href="/img/page/favicon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="LQZHI">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="物联网系列之ESP主控读取空气、光照等传感器、控制继电器相关资料网站: esp32c3 SuperMini:ESP32C3SuperMini 入门 esp8266-01s:ESP8266物联网开发参考资料 – 太极创客  ESP8266-01S联动继电器与 Home Assistant 实物如下： ESP8266-01S:   与ESP8266-01S配套的继电器模块：(默认使用GPIO 0进行触">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ESP读取空气质量、光照、控制继电器">
+<meta property="og:url" content="https://lqzhi.github.io/2025/04/19/ESP%E8%AF%BB%E5%8F%96%E7%A9%BA%E6%B0%94%E8%B4%A8%E9%87%8F%E3%80%81%E5%85%89%E7%85%A7%E3%80%81%E6%8E%A7%E5%88%B6%E7%BB%A7%E7%94%B5%E5%99%A8/index.html">
+<meta property="og:site_name" content="MY-BLOG">
+<meta property="og:description" content="物联网系列之ESP主控读取空气、光照等传感器、控制继电器相关资料网站: esp32c3 SuperMini:ESP32C3SuperMini 入门 esp8266-01s:ESP8266物联网开发参考资料 – 太极创客  ESP8266-01S联动继电器与 Home Assistant 实物如下： ESP8266-01S:   与ESP8266-01S配套的继电器模块：(默认使用GPIO 0进行触">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/ESP%E8%AF%BB%E5%8F%96%E7%A9%BA%E6%B0%94%E8%B4%A8%E9%87%8F%E3%80%81%E5%85%89%E7%85%A7%E3%80%81%E6%8E%A7%E5%88%B6%E7%BB%A7%E7%94%B5%E5%99%A8/1.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/ESP%E8%AF%BB%E5%8F%96%E7%A9%BA%E6%B0%94%E8%B4%A8%E9%87%8F%E3%80%81%E5%85%89%E7%85%A7%E3%80%81%E6%8E%A7%E5%88%B6%E7%BB%A7%E7%94%B5%E5%99%A8/2.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/ESP%E8%AF%BB%E5%8F%96%E7%A9%BA%E6%B0%94%E8%B4%A8%E9%87%8F%E3%80%81%E5%85%89%E7%85%A7%E3%80%81%E6%8E%A7%E5%88%B6%E7%BB%A7%E7%94%B5%E5%99%A8/3.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/ESP%E8%AF%BB%E5%8F%96%E7%A9%BA%E6%B0%94%E8%B4%A8%E9%87%8F%E3%80%81%E5%85%89%E7%85%A7%E3%80%81%E6%8E%A7%E5%88%B6%E7%BB%A7%E7%94%B5%E5%99%A8/4.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/ESP%E8%AF%BB%E5%8F%96%E7%A9%BA%E6%B0%94%E8%B4%A8%E9%87%8F%E3%80%81%E5%85%89%E7%85%A7%E3%80%81%E6%8E%A7%E5%88%B6%E7%BB%A7%E7%94%B5%E5%99%A8/5.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/ESP%E8%AF%BB%E5%8F%96%E7%A9%BA%E6%B0%94%E8%B4%A8%E9%87%8F%E3%80%81%E5%85%89%E7%85%A7%E3%80%81%E6%8E%A7%E5%88%B6%E7%BB%A7%E7%94%B5%E5%99%A8/6.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/ESP%E8%AF%BB%E5%8F%96%E7%A9%BA%E6%B0%94%E8%B4%A8%E9%87%8F%E3%80%81%E5%85%89%E7%85%A7%E3%80%81%E6%8E%A7%E5%88%B6%E7%BB%A7%E7%94%B5%E5%99%A8/7.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/ESP%E8%AF%BB%E5%8F%96%E7%A9%BA%E6%B0%94%E8%B4%A8%E9%87%8F%E3%80%81%E5%85%89%E7%85%A7%E3%80%81%E6%8E%A7%E5%88%B6%E7%BB%A7%E7%94%B5%E5%99%A8/8.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/ESP%E8%AF%BB%E5%8F%96%E7%A9%BA%E6%B0%94%E8%B4%A8%E9%87%8F%E3%80%81%E5%85%89%E7%85%A7%E3%80%81%E6%8E%A7%E5%88%B6%E7%BB%A7%E7%94%B5%E5%99%A8/9.webp">
+<meta property="article:published_time" content="2025-04-19T02:26:34.000Z">
+<meta property="article:modified_time" content="2025-05-23T03:42:37.225Z">
+<meta property="article:author" content="LQZHI">
+<meta property="article:tag" content="物联网系列">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lqzhi.github.io/img/docs/ESP%E8%AF%BB%E5%8F%96%E7%A9%BA%E6%B0%94%E8%B4%A8%E9%87%8F%E3%80%81%E5%85%89%E7%85%A7%E3%80%81%E6%8E%A7%E5%88%B6%E7%BB%A7%E7%94%B5%E5%99%A8/1.webp">
+  
+  
+  
+  <title>ESP读取空气质量、光照、控制继电器 - MY-BLOG</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"lqzhi.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>闻言的笔记本</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/page/Page.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="ESP读取空气质量、光照、控制继电器"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-04-19 10:26" pubdate>
+          2025年4月19日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          21 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">ESP读取空气质量、光照、控制继电器</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2025年5月23日 中午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="物联网系列之ESP主控读取空气、光照等传感器、控制继电器"><a href="#物联网系列之ESP主控读取空气、光照等传感器、控制继电器" class="headerlink" title="物联网系列之ESP主控读取空气、光照等传感器、控制继电器"></a>物联网系列之ESP主控读取空气、光照等传感器、控制继电器</h2><p>相关资料网站:</p>
+<p>esp32c3 SuperMini:<a target="_blank" rel="noopener" href="https://www.nologo.tech/product/esp32/esp32c3/esp32c3supermini/esp32C3SuperMini.html">ESP32C3SuperMini 入门</a></p>
+<p>esp8266-01s:<a target="_blank" rel="noopener" href="http://www.taichi-maker.com/homepage/iot-development/iot-dev-reference/esp8266-iot-dev-ref/">ESP8266物联网开发参考资料 – 太极创客</a></p>
+<blockquote>
+<h5 id="ESP8266-01S联动继电器与-Home-Assistant"><a href="#ESP8266-01S联动继电器与-Home-Assistant" class="headerlink" title="ESP8266-01S联动继电器与 Home Assistant"></a>ESP8266-01S联动继电器与 Home Assistant</h5></blockquote>
+<p>实物如下：</p>
+<p>ESP8266-01S:</p>
+<p><img src="/img/docs/ESP%E8%AF%BB%E5%8F%96%E7%A9%BA%E6%B0%94%E8%B4%A8%E9%87%8F%E3%80%81%E5%85%89%E7%85%A7%E3%80%81%E6%8E%A7%E5%88%B6%E7%BB%A7%E7%94%B5%E5%99%A8/1.webp" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/img/docs/ESP%E8%AF%BB%E5%8F%96%E7%A9%BA%E6%B0%94%E8%B4%A8%E9%87%8F%E3%80%81%E5%85%89%E7%85%A7%E3%80%81%E6%8E%A7%E5%88%B6%E7%BB%A7%E7%94%B5%E5%99%A8/2.webp" srcset="/img/loading.gif" lazyload></p>
+<p>与ESP8266-01S配套的继电器模块：(默认使用GPIO 0进行触发)</p>
+<p><img src="/img/docs/ESP%E8%AF%BB%E5%8F%96%E7%A9%BA%E6%B0%94%E8%B4%A8%E9%87%8F%E3%80%81%E5%85%89%E7%85%A7%E3%80%81%E6%8E%A7%E5%88%B6%E7%BB%A7%E7%94%B5%E5%99%A8/3.webp" srcset="/img/loading.gif" lazyload alt="ESP01SRealy"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;ESP8266WiFi.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;DNSServer.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;ESP8266WebServer.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;WiFiManager.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;PubSubClient.h&gt;</span></span><br><span class="hljs-comment">//#include &lt;ArduinoJson.h&gt;</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> DEBUG 0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> RELAY_PIN 0</span><br><span class="hljs-comment">// 建立WiFiManager对象</span><br>WiFiManager wifiManager;<br>WiFiClient espClient;<br>PubSubClient mqttClient;<br><br><span class="hljs-type">bool</span> relay_state = <span class="hljs-literal">false</span>;<br><span class="hljs-type">const</span> <span class="hljs-type">char</span> *mqtt_broker_addr = <span class="hljs-string">&quot;&quot;</span>;<br><span class="hljs-type">const</span> <span class="hljs-type">uint16_t</span> mqtt_broker_port = <span class="hljs-number">1883</span>;<br><span class="hljs-type">const</span> <span class="hljs-type">char</span> *mqtt_username = <span class="hljs-string">&quot;&quot;</span>;<br><span class="hljs-type">const</span> <span class="hljs-type">char</span> *mqtt_password = <span class="hljs-string">&quot;&quot;</span>;<br><span class="hljs-type">const</span> <span class="hljs-type">uint16_t</span> mqtt_client_buff_size = <span class="hljs-number">4096</span>;                          <span class="hljs-comment">// 客户端缓存大小（非必须）</span><br><span class="hljs-type">const</span> <span class="hljs-type">char</span> *mqtt_ha_config_topic = <span class="hljs-string">&quot;HomeAssistant/switch/NightLight/config&quot;</span>;  <span class="hljs-comment">//小夜灯继电器配置</span><br><span class="hljs-type">const</span> <span class="hljs-type">char</span> *mqtt_ha_state_topic = <span class="hljs-string">&quot;HomeAssistant/switch/NightLight/state&quot;</span>;    <span class="hljs-comment">//小夜灯状态配置</span><br><span class="hljs-type">const</span> <span class="hljs-type">char</span> *mqtt_ha_command_topic = <span class="hljs-string">&quot;HomeAssistant/switch/NightLight/set&quot;</span>;    <span class="hljs-comment">//小夜灯设置配置</span><br><span class="hljs-type">char</span> mqtt_client_id[<span class="hljs-number">38</span>] = <span class="hljs-string">&quot;ORANGEPI_RELAY_CONTROLLER&quot;</span>;  <span class="hljs-comment">//客户端ID</span><br><br><br><span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> previousConnectMillis = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 毫秒时间记录</span><br><span class="hljs-type">const</span> <span class="hljs-type">long</span> intervalConnectMillis = <span class="hljs-number">5000</span>;  <span class="hljs-comment">// 时间间隔</span><br><span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> previousPublishMillis = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 毫秒时间记录</span><br><span class="hljs-type">const</span> <span class="hljs-type">long</span> intervalPublishMillis = <span class="hljs-number">500</span>;  <span class="hljs-comment">// 时间间隔</span><br><br><span class="hljs-comment">// 定义JSON数据</span><br><span class="hljs-type">const</span> <span class="hljs-type">char</span>* mqtt_ha_config = <span class="hljs-string">R&quot;(&#123;</span><br><span class="hljs-string">   &quot;name&quot;:&quot;小夜灯控制器&quot;,</span><br><span class="hljs-string">   &quot;command_topic&quot;:&quot;HomeAssistant/switch/NightLight/set&quot;,</span><br><span class="hljs-string">   &quot;state_topic&quot;:&quot;HomeAssistant/switch/NightLight/state&quot;,</span><br><span class="hljs-string">   &quot;unique_id&quot;:&quot;NightLight01FC&quot;,</span><br><span class="hljs-string">   &quot;device&quot;:&#123;</span><br><span class="hljs-string">      &quot;identifiers&quot;:[</span><br><span class="hljs-string">         &quot;01FC&quot;</span><br><span class="hljs-string">      ],</span><br><span class="hljs-string">      &quot;name&quot;:&quot;NightLight&quot;</span><br><span class="hljs-string">   &#125;</span><br><span class="hljs-string">&#125;)&quot;</span>;<br><br><span class="hljs-comment">// MQTT连接成功后的回调函数</span><br><span class="hljs-comment">// MQTT消息回调函数，该函数会在PubSubClient对象的loop方法中被调用</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">mqtt_callback</span><span class="hljs-params">(<span class="hljs-type">char</span> *topic, byte *payload, <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> length)</span> &#123;<br>  <span class="hljs-keyword">if</span>(length == <span class="hljs-number">2</span> &amp;&amp; payload[<span class="hljs-number">0</span>] == <span class="hljs-string">&#x27;O&#x27;</span> &amp;&amp; payload[<span class="hljs-number">1</span>] == <span class="hljs-string">&#x27;N&#x27;</span>)&#123;<br>      digitalWrite(RELAY_PIN, LOW); <span class="hljs-comment">//Set the GPIO0 output level to high.线圈打开电力</span><br>      relay_state = <span class="hljs-literal">true</span>;<br>  &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(length == <span class="hljs-number">3</span> &amp;&amp; payload[<span class="hljs-number">0</span>] == <span class="hljs-string">&#x27;O&#x27;</span> &amp;&amp; payload[<span class="hljs-number">1</span>] == <span class="hljs-string">&#x27;F&#x27;</span> &amp;&amp; payload[<span class="hljs-number">2</span>] == <span class="hljs-string">&#x27;F&#x27;</span>)&#123;<br>      digitalWrite(RELAY_PIN, HIGH); <span class="hljs-comment">//Set the GPIO0 output level to high.线圈失去电力</span><br>      relay_state = <span class="hljs-literal">false</span>;<br>  &#125;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">setup</span><span class="hljs-params">()</span> &#123;<br>  <span class="hljs-comment">//打开串口</span><br>  Serial.begin(<span class="hljs-number">115200</span>);<br>  pinMode(RELAY_PIN,OUTPUT);  <span class="hljs-comment">//Set GPIO0 to output mode.</span><br>  digitalWrite(RELAY_PIN, HIGH); <span class="hljs-comment">//Set the GPIO0 output level to high.线圈失去电力</span><br>  relay_state = <span class="hljs-literal">false</span>;<br>  <span class="hljs-keyword">if</span> (DEBUG) &#123;<br>    <span class="hljs-comment">// 清除ESP8266所存储的WiFi连接信息以便测试WiFiManager工作效果</span><br>    wifiManager.resetSettings();<br>  &#125;<br>  wifiManager.autoConnect(<span class="hljs-string">&quot;NightLight_01FC&quot;</span>);  <span class="hljs-comment">//连接WiFi</span><br>                                            <span class="hljs-comment">// 设置MQTT服务器和回调函数</span><br>                                            <span class="hljs-comment">// 设置MQTT客户端</span><br>  mqttClient.setClient(espClient);<br>  mqttClient.setServer(mqtt_broker_addr, mqtt_broker_port);<br>  mqttClient.setBufferSize(mqtt_client_buff_size);<br>  mqttClient.setKeepAlive(<span class="hljs-number">60</span>);<br>  mqttClient.setCallback(mqtt_callback);<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">loop</span><span class="hljs-params">()</span> &#123;<br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> currentMillis = millis();  <span class="hljs-comment">// 读取当前时间</span><br>  <span class="hljs-comment">// 连接MQTT服务器</span><br>  <span class="hljs-keyword">if</span> (!mqttClient.connected())  <span class="hljs-comment">// 如果未连接</span><br>  &#123;<br>    <span class="hljs-keyword">if</span> (currentMillis - previousConnectMillis &gt; intervalConnectMillis) &#123;<br>      previousConnectMillis = currentMillis;<br>      <span class="hljs-keyword">if</span> (mqttClient.connect(mqtt_client_id, mqtt_username, mqtt_password)) &#123;  <span class="hljs-comment">// 尝试连接服务器</span><br>          mqttClient.publish(mqtt_ha_config_topic,mqtt_ha_config);  <span class="hljs-comment">// 连接成功后可以发送消息</span><br>          mqttClient.subscribe(mqtt_ha_command_topic,<span class="hljs-number">0</span>);<br>          Serial.println(<span class="hljs-string">&quot;MQTT连接成功,配置信息已发送至HA.&quot;</span>);<br>      &#125;<span class="hljs-keyword">else</span>&#123;<br>        Serial.println(<span class="hljs-string">&quot;MQTT连接失败,请检查配置.&quot;</span>);<br>      &#125;<br>    &#125;<br>  &#125;<br><br>  <span class="hljs-comment">// 定期发送消息</span><br>  <span class="hljs-keyword">if</span> (mqttClient.connected()) &#123;<br>    <span class="hljs-keyword">if</span> (currentMillis - previousPublishMillis &gt;= intervalPublishMillis)  <span class="hljs-comment">// 如果和前次时间大于等于时间间隔</span><br>    &#123;<br>      previousPublishMillis = currentMillis;<br>      <span class="hljs-keyword">if</span>(relay_state)&#123;<br>         mqttClient.publish(mqtt_ha_state_topic,<span class="hljs-string">&quot;ON&quot;</span>);  <span class="hljs-comment">// 连接成功后可以发送消息</span><br>      &#125;<span class="hljs-keyword">else</span>&#123;<br>        mqttClient.publish(mqtt_ha_state_topic,<span class="hljs-string">&quot;OFF&quot;</span>);  <span class="hljs-comment">// 连接成功后可以发送消息</span><br>      &#125;<br>    &#125;<br>  &#125;<br>  <span class="hljs-comment">// 处理MQTT事务</span><br>  mqttClient.loop();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<h5 id="ESPC3-SuperMini-读取-BH1750-数字光照传感器的值"><a href="#ESPC3-SuperMini-读取-BH1750-数字光照传感器的值" class="headerlink" title="ESPC3 SuperMini 读取 BH1750 数字光照传感器的值"></a>ESPC3 SuperMini 读取 BH1750 数字光照传感器的值</h5></blockquote>
+<p><img src="/img/docs/ESP%E8%AF%BB%E5%8F%96%E7%A9%BA%E6%B0%94%E8%B4%A8%E9%87%8F%E3%80%81%E5%85%89%E7%85%A7%E3%80%81%E6%8E%A7%E5%88%B6%E7%BB%A7%E7%94%B5%E5%99%A8/4.webp" srcset="/img/loading.gif" lazyload alt="康耀三维科技（深圳）有限公司GY302 BH1750 光强度光照度传感器模块 BH1750FVI"></p>
+<p>使用的是I2C进行通信，5个引脚，分别是</p>
+<table>
+<thead>
+<tr>
+<th>VCC</th>
+<th>供电电压源正极  5V通信</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SCL</td>
+<td>IIC时钟线，时钟输入引脚，由MCU输出时钟</td>
+</tr>
+<tr>
+<td>SDA</td>
+<td>IIC数据线，双向IO口，用来传输数据</td>
+</tr>
+<tr>
+<td>ADDR</td>
+<td>IIC地址线，&lt; 0.7v 时 地址为0100011 (0x23)，&gt;0.7v 时 器件地址为1011100(0x5c)</td>
+</tr>
+<tr>
+<td>GND</td>
+<td>供电电压源负极</td>
+</tr>
+</tbody></table>
+<p>Arduino有库，我使用的是：</p>
+<p>案例代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/*</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">Advanced BH1750 library usage example</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">This example has some comments about advanced usage features.</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">Connections</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">  - VCC to 3V3 or 5V</span><br><span class="hljs-comment">  - GND to GND</span><br><span class="hljs-comment">  - SCL to SCL (A5 on Arduino Uno, Leonardo, etc or 21 on Mega and Due, on</span><br><span class="hljs-comment">    esp8266 free selectable)</span><br><span class="hljs-comment">  - SDA to SDA (A4 on Arduino Uno, Leonardo, etc or 20 on Mega and Due, on</span><br><span class="hljs-comment">    esp8266 free selectable)</span><br><span class="hljs-comment">  - ADD to (not connected) or GND</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">ADD pin is used to set sensor I2C address. If it has voltage greater or equal</span><br><span class="hljs-comment">to 0.7VCC voltage (e.g. you&#x27;ve connected it to VCC) the sensor address will be</span><br><span class="hljs-comment">0x5C. In other case (if ADD voltage less than 0.7 * VCC) the sensor address</span><br><span class="hljs-comment">will be 0x23 (by default).</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">*/</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;BH1750.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Wire.h&gt;</span></span><br><br><span class="hljs-comment">/*</span><br><span class="hljs-comment">  BH1750 can be physically configured to use two I2C addresses:</span><br><span class="hljs-comment">    - 0x23 (most common) (if ADD pin had &lt; 0.7VCC voltage)</span><br><span class="hljs-comment">    - 0x5C (if ADD pin had &gt; 0.7VCC voltage)</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">  Library uses 0x23 address as default, but you can define any other address.</span><br><span class="hljs-comment">  If you had troubles with default value - try to change it to 0x5C.</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">*/</span><br>BH1750 <span class="hljs-title function_">lightMeter</span><span class="hljs-params">(<span class="hljs-number">0x23</span>)</span>;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">setup</span><span class="hljs-params">()</span> &#123;<br><br>  Serial.begin(<span class="hljs-number">9600</span>);<br><br>  <span class="hljs-comment">// Initialize the I2C bus (BH1750 library doesn&#x27;t do this automatically)</span><br>  Wire.begin(<span class="hljs-number">8</span>,<span class="hljs-number">9</span>); <span class="hljs-comment">//SDA SCL</span><br>  <span class="hljs-comment">// On esp8266 you can select SCL and SDA pins using Wire.begin(D4, D3);</span><br><br>  <span class="hljs-comment">/*</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">    BH1750 has six different measurement modes. They are divided in two groups;</span><br><span class="hljs-comment">    continuous and one-time measurements. In continuous mode, sensor</span><br><span class="hljs-comment">    continuously measures lightness value. In one-time mode the sensor makes</span><br><span class="hljs-comment">    only one measurement and then goes into Power Down mode.</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">    Each mode, has three different precisions:</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">      - Low Resolution Mode - (4 lx precision, 16ms measurement time)</span><br><span class="hljs-comment">      - High Resolution Mode - (1 lx precision, 120ms measurement time)</span><br><span class="hljs-comment">      - High Resolution Mode 2 - (0.5 lx precision, 120ms measurement time)</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">    By default, the library uses Continuous High Resolution Mode, but you can</span><br><span class="hljs-comment">    set any other mode, by passing it to BH1750.begin() or BH1750.configure()</span><br><span class="hljs-comment">    functions.</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">    [!] Remember, if you use One-Time mode, your sensor will go to Power Down</span><br><span class="hljs-comment">    mode each time, when it completes a measurement and you&#x27;ve read it.</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">    Full mode list:</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">      BH1750_CONTINUOUS_LOW_RES_MODE</span><br><span class="hljs-comment">      BH1750_CONTINUOUS_HIGH_RES_MODE (default)</span><br><span class="hljs-comment">      BH1750_CONTINUOUS_HIGH_RES_MODE_2</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">      BH1750_ONE_TIME_LOW_RES_MODE</span><br><span class="hljs-comment">      BH1750_ONE_TIME_HIGH_RES_MODE</span><br><span class="hljs-comment">      BH1750_ONE_TIME_HIGH_RES_MODE_2</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">  */</span><br><br>  <span class="hljs-comment">// begin returns a boolean that can be used to detect setup problems.</span><br>  <span class="hljs-keyword">if</span> (lightMeter.begin(BH1750::CONTINUOUS_HIGH_RES_MODE)) &#123;<br>    Serial.println(F(<span class="hljs-string">&quot;BH1750 Advanced begin&quot;</span>));<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    Serial.println(F(<span class="hljs-string">&quot;Error initialising BH1750&quot;</span>));<br>  &#125;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">loop</span><span class="hljs-params">()</span> &#123;<br>  <span class="hljs-keyword">if</span> (lightMeter.measurementReady()) &#123;<br>    <span class="hljs-type">float</span> lux = lightMeter.readLightLevel();<br>    Serial.print(<span class="hljs-string">&quot;Light: &quot;</span>);<br>    Serial.print(lux);<br>    Serial.println(<span class="hljs-string">&quot; lx&quot;</span>);<br>  &#125;<br>  delay(<span class="hljs-number">500</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<h5 id="ESPC3-SuperMini读取空气质量3合一传感器"><a href="#ESPC3-SuperMini读取空气质量3合一传感器" class="headerlink" title="ESPC3 SuperMini读取空气质量3合一传感器"></a>ESPC3 SuperMini读取空气质量3合一传感器</h5></blockquote>
+<p>购买链接： #小程序:&#x2F;&#x2F;拼多多&#x2F;OcDCOVxnkyN9csf</p>
+<p>实物：</p>
+<p><img src="/img/docs/ESP%E8%AF%BB%E5%8F%96%E7%A9%BA%E6%B0%94%E8%B4%A8%E9%87%8F%E3%80%81%E5%85%89%E7%85%A7%E3%80%81%E6%8E%A7%E5%88%B6%E7%BB%A7%E7%94%B5%E5%99%A8/5.webp" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/img/docs/ESP%E8%AF%BB%E5%8F%96%E7%A9%BA%E6%B0%94%E8%B4%A8%E9%87%8F%E3%80%81%E5%85%89%E7%85%A7%E3%80%81%E6%8E%A7%E5%88%B6%E7%BB%A7%E7%94%B5%E5%99%A8/6.webp" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/img/docs/ESP%E8%AF%BB%E5%8F%96%E7%A9%BA%E6%B0%94%E8%B4%A8%E9%87%8F%E3%80%81%E5%85%89%E7%85%A7%E3%80%81%E6%8E%A7%E5%88%B6%E7%BB%A7%E7%94%B5%E5%99%A8/7.webp" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/img/docs/ESP%E8%AF%BB%E5%8F%96%E7%A9%BA%E6%B0%94%E8%B4%A8%E9%87%8F%E3%80%81%E5%85%89%E7%85%A7%E3%80%81%E6%8E%A7%E5%88%B6%E7%BB%A7%E7%94%B5%E5%99%A8/8.webp" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/img/docs/ESP%E8%AF%BB%E5%8F%96%E7%A9%BA%E6%B0%94%E8%B4%A8%E9%87%8F%E3%80%81%E5%85%89%E7%85%A7%E3%80%81%E6%8E%A7%E5%88%B6%E7%BB%A7%E7%94%B5%E5%99%A8/9.webp" srcset="/img/loading.gif" lazyload></p>
+<p>代码:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;HardwareSerial.h&quot;</span></span><br><br><span class="hljs-comment">// 定义串口通信的波特率</span><br><span class="hljs-type">const</span> <span class="hljs-type">long</span> baudRate = <span class="hljs-number">9600</span>;<br><span class="hljs-comment">// 实例化HardwareSerial对象,目前我也不知道这个1具体值得是啥，可能是串口1，usb串口是0</span><br>HardwareSerial <span class="hljs-title function_">mySerial</span><span class="hljs-params">(<span class="hljs-number">1</span>)</span>; <br><br>byte airData[<span class="hljs-number">9</span>];<br>byte airIndex = <span class="hljs-number">0</span>;<br><br><span class="hljs-comment">// 计算CRC校验值</span><br>byte <span class="hljs-title function_">calculateCRC</span><span class="hljs-params">(byte data[], <span class="hljs-type">int</span> length)</span> &#123;<br>  byte crc = <span class="hljs-number">0</span>;<br>  <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; length; i++) &#123;<br>    crc += data[i];<br>  &#125;<br>  <span class="hljs-keyword">return</span> crc;<br>&#125;<br><br><br><span class="hljs-type">void</span> <span class="hljs-title function_">setup</span><span class="hljs-params">()</span> &#123;<br>  <span class="hljs-comment">// 初始化默认串口（通常用于调试信息输出）</span><br>  Serial.begin(baudRate);<br>  <span class="hljs-comment">// 初始化自定义串口</span><br>  <span class="hljs-comment">//void HardwareSerial::begin(unsigned long baud, uint32_t config=SERIAL_8N1, int8_t rxPin=-1, int8_t txPin=-1, bool invert=false, unsigned long timeout_ms = 20000UL);</span><br>  mySerial.begin(baudRate, SERIAL_8N1, <span class="hljs-number">20</span>, <span class="hljs-number">21</span>, <span class="hljs-literal">false</span>, <span class="hljs-number">20000UL</span>);<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">loop</span><span class="hljs-params">()</span> &#123;<br>  <span class="hljs-keyword">if</span> (mySerial.available() &gt; <span class="hljs-number">0</span>) &#123;<br>    airData[airIndex++] = mySerial.read();<br>    <span class="hljs-keyword">if</span> (airIndex &gt;= <span class="hljs-number">9</span>) &#123;<br>      <span class="hljs-comment">//溢出，可计算数据！</span><br>      byte calculatedCRC = calculateCRC(airData, airIndex - <span class="hljs-number">1</span>);<br>      byte receivedCRC = airData[airIndex - <span class="hljs-number">1</span>];<br>      <span class="hljs-comment">// 验证CRC校验值</span><br>      <span class="hljs-keyword">if</span> (calculatedCRC == receivedCRC) &#123;<br>        <span class="hljs-comment">// 提取TVOC数据</span><br>        <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> tvoc = (airData[<span class="hljs-number">2</span>] &lt;&lt; <span class="hljs-number">8</span>) | airData[<span class="hljs-number">3</span>];<br>        <span class="hljs-comment">// 提取CH₂O数据</span><br>        <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> ch2o = (airData[<span class="hljs-number">4</span>] &lt;&lt; <span class="hljs-number">8</span>) | airData[<span class="hljs-number">5</span>];<br>        <span class="hljs-comment">// 提取CO₂数据</span><br>        <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> co2 = (airData[<span class="hljs-number">6</span>] &lt;&lt; <span class="hljs-number">8</span>) | airData[<span class="hljs-number">7</span>];<br><br>        <span class="hljs-comment">// 输出解析结果</span><br>        Serial.print(<span class="hljs-string">&quot;TVOC: &quot;</span>);<br>        Serial.print(tvoc);<br>        Serial.println(<span class="hljs-string">&quot; ppb&quot;</span>);<br><br>        Serial.print(<span class="hljs-string">&quot;CH₂O: &quot;</span>);<br>        Serial.print(ch2o);<br>        Serial.println(<span class="hljs-string">&quot; ppm&quot;</span>);<br><br>        Serial.print(<span class="hljs-string">&quot;CO₂: &quot;</span>);<br>        Serial.print(co2);<br>        Serial.println(<span class="hljs-string">&quot; ppm&quot;</span>);<br>        Serial.println();<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        Serial.println(<span class="hljs-string">&quot;CRC check failed!&quot;</span>);<br>      &#125;<br>      airIndex = <span class="hljs-number">0</span>;<span class="hljs-comment">//置空</span><br>    &#125;<br>    <span class="hljs-comment">// 使用格式化输出保证每个字节以两位十六进制数显示</span><br>    <span class="hljs-comment">//Serial.printf(&quot;%02X &quot;, airData[airIndex]);</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<h5 id="ESPC3-SuperMini-将BH1750-和空气质量传感器与Home-Assistant联动"><a href="#ESPC3-SuperMini-将BH1750-和空气质量传感器与Home-Assistant联动" class="headerlink" title="ESPC3 SuperMini 将BH1750 和空气质量传感器与Home Assistant联动"></a>ESPC3 SuperMini 将BH1750 和空气质量传感器与Home Assistant联动</h5></blockquote>
+<p>直接附上代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;WiFiManager.h&gt;</span> </span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;BH1750.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;Wire.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;PubSubClient.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;ArduinoJson.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;HardwareSerial.h&gt;</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> mqtt_broker_addr <span class="hljs-string">&quot;192.168.0.200&quot;</span>  <span class="hljs-comment">//MQTT服务器</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> mqtt_broker_port  1883          <span class="hljs-comment">//mqtt端口，默认1883</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> mqtt_username <span class="hljs-string">&quot;lqzhi&quot;</span>             <span class="hljs-comment">//MQTT的账户</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> mqtt_password <span class="hljs-string">&quot;lqzhi_password&quot;</span>    <span class="hljs-comment">//MQTT的密码</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> mqtt_client_buff_size 1024     <span class="hljs-comment">// 客户端缓存大小（非必须）</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> mqtt_ha_light_config_topic <span class="hljs-string">&quot;LQZHI/sensor/Light/config&quot;</span>  <span class="hljs-comment">//光照传感器状态配置</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> mqtt_ha_light_state_topic <span class="hljs-string">&quot;LQZHI/sensor/Light/state&quot;</span>   <span class="hljs-comment">//光照传感器状态配置</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> mqtt_ha_air_tovc_config_topic <span class="hljs-string">&quot;LQZHI/sensor/AirTOVC/config&quot;</span>  <span class="hljs-comment">//光照传感器状态配置</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> mqtt_ha_air_ch2o_config_topic <span class="hljs-string">&quot;LQZHI/sensor/AirCH2O/config&quot;</span>  <span class="hljs-comment">//光照传感器状态配置</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> mqtt_ha_air_co2_config_topic <span class="hljs-string">&quot;LQZHI/sensor/AirCO2/config&quot;</span>  <span class="hljs-comment">//光照传感器状态配置</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> mqtt_ha_air_state_topic <span class="hljs-string">&quot;LQZHI/sensor/Air/state&quot;</span>    <span class="hljs-comment">//光照传感器状态配置</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> mqtt_client_id <span class="hljs-string">&quot;ORANGEPI_BH1750_AIR_SERSOR&quot;</span>                    <span class="hljs-comment">//客户端ID</span></span><br><br><span class="hljs-type">unsigned</span> <span class="hljs-type">long</span>  previousConnectMillis = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 毫秒时间记录</span><br><span class="hljs-type">const</span> <span class="hljs-type">long</span> PROGMEM intervalConnectMillis = <span class="hljs-number">5000</span>;  <span class="hljs-comment">// 时间间隔  //此变量不变，放入到FLASH中减轻压力</span><br><span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> previousPublishMillis = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 毫秒时间记录</span><br><span class="hljs-type">const</span> <span class="hljs-type">long</span> PROGMEM intervalPublishMillis = <span class="hljs-number">1000</span>;  <span class="hljs-comment">// 时间间隔  //此变量不变，放入到FLASH中减轻压力</span><br><br>WiFiClient espClient;<br>PubSubClient mqttClient;<br>BH1750 <span class="hljs-title function_">lightMeter</span><span class="hljs-params">(<span class="hljs-number">0x23</span>)</span>;<br>HardwareSerial <span class="hljs-title function_">mySerial</span><span class="hljs-params">(<span class="hljs-number">1</span>)</span>;<br><br>byte airData[<span class="hljs-number">9</span>];<br>byte airIndex = <span class="hljs-number">0</span>;<br><span class="hljs-type">double</span> tvoc,ch2o;<br><span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> co2;<br><br><span class="hljs-comment">// 计算CRC校验值</span><br>byte <span class="hljs-title function_">calculateCRC</span><span class="hljs-params">(byte data[], <span class="hljs-type">int</span> length)</span> &#123;<br>  byte crc = <span class="hljs-number">0</span>;<br>  <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; length; i++) &#123;<br>    crc += data[i];<br>  &#125;<br>  <span class="hljs-keyword">return</span> crc;<br>&#125;<br><br><span class="hljs-comment">//生产HA的Config</span><br>String <span class="hljs-title function_">generateHAConfig</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* name, <span class="hljs-type">const</span> <span class="hljs-type">char</span>* stateTopic, <span class="hljs-type">const</span> <span class="hljs-type">char</span>* uniqueId, <span class="hljs-type">const</span> <span class="hljs-type">char</span>* unit, <span class="hljs-type">const</span> <span class="hljs-type">char</span>* valueTemplate, <span class="hljs-type">const</span> <span class="hljs-type">char</span>* deviceId, <span class="hljs-type">const</span> <span class="hljs-type">char</span>* deviceName)</span> &#123;<br>    DynamicJsonDocument <span class="hljs-title function_">doc</span><span class="hljs-params">(<span class="hljs-number">1024</span>)</span>;<br>    doc[<span class="hljs-string">&quot;name&quot;</span>] = name;<br>    doc[<span class="hljs-string">&quot;state_topic&quot;</span>] = stateTopic;<br>    doc[<span class="hljs-string">&quot;unique_id&quot;</span>] = uniqueId;<br>    doc[<span class="hljs-string">&quot;unit_of_measurement&quot;</span>] = unit;<br>    <span class="hljs-keyword">if</span> (valueTemplate != nullptr) &#123;<br>        doc[<span class="hljs-string">&quot;value_template&quot;</span>] = valueTemplate;<br>    &#125;<br>    JsonObject device = doc.createNestedObject(<span class="hljs-string">&quot;device&quot;</span>);<br>    JsonArray identifiers = device.createNestedArray(<span class="hljs-string">&quot;identifiers&quot;</span>);<br>    identifiers.add(deviceId);<br>    device[<span class="hljs-string">&quot;name&quot;</span>] = deviceName;<br>    String jsonString;<br>    serializeJson(doc, jsonString);<br>    <span class="hljs-keyword">return</span> jsonString;<br>&#125;<br><br><span class="hljs-comment">//生产Air的JSON字符串</span><br>String <span class="hljs-title function_">generateAirJson</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-comment">// 创建一个动态的 JSON 文档，指定合适的容量</span><br>    DynamicJsonDocument <span class="hljs-title function_">doc</span><span class="hljs-params">(<span class="hljs-number">256</span>)</span>; <br><br>    <span class="hljs-comment">// 向 JSON 对象中添加数据</span><br>    doc[<span class="hljs-string">&quot;tovc&quot;</span>] = tvoc;<br>    doc[<span class="hljs-string">&quot;ch2o&quot;</span>] = ch2o;<br>    doc[<span class="hljs-string">&quot;co2&quot;</span>] = co2;<br><br>    <span class="hljs-comment">// 用于存储序列化后的 JSON 字符串</span><br>    String jsonString; <br>    <span class="hljs-comment">// 将 JSON 文档序列化为字符串</span><br>    serializeJson(doc, jsonString); <br><br>    <span class="hljs-keyword">return</span> jsonString;<br>&#125;    <br><span class="hljs-type">void</span> <span class="hljs-title function_">setup</span><span class="hljs-params">()</span> &#123;<br>  <span class="hljs-comment">//初始化串口</span><br>  Serial.begin(<span class="hljs-number">9600</span>);<br>   <span class="hljs-comment">//配置网络</span><br>  WiFiManager wifiManager;<br>  wifiManager.setConfigPortalTimeout(<span class="hljs-number">180</span>);<br>  <span class="hljs-keyword">if</span>(!wifiManager.autoConnect()) &#123; <br>    Serial.println(<span class="hljs-string">&quot;failed to connect and hit timeout&quot;</span>);<br>    delay(<span class="hljs-number">3000</span>);<br>    <span class="hljs-comment">//reset and try again, or maybe put it to deep sleep</span><br>    ESP.restart();<br>    delay(<span class="hljs-number">5000</span>);<br>  &#125;<br><br>  <span class="hljs-comment">//初始化mqtt</span><br>  mqttClient.setClient(espClient);<br>  mqttClient.setServer(mqtt_broker_addr, mqtt_broker_port);<br>  mqttClient.setBufferSize(mqtt_client_buff_size);<br>  mqttClient.setKeepAlive(<span class="hljs-number">60</span>);<br><br>  <span class="hljs-comment">//初始化串口</span><br>  mySerial.begin(<span class="hljs-number">9600UL</span>, SERIAL_8N1, <span class="hljs-number">20</span>, <span class="hljs-number">21</span>, <span class="hljs-literal">false</span>, <span class="hljs-number">20000UL</span>);<br><br>  Wire.begin(<span class="hljs-number">8</span>,<span class="hljs-number">9</span>);<br>  <span class="hljs-comment">//初始化配置Light</span><br>  <span class="hljs-keyword">if</span> (lightMeter.begin(BH1750::CONTINUOUS_HIGH_RES_MODE)) &#123;<br>    Serial.println(F(<span class="hljs-string">&quot;BH1750 Advanced begin&quot;</span>));<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    Serial.println(F(<span class="hljs-string">&quot;Error initialising BH1750&quot;</span>));<br>  &#125;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">loop</span><span class="hljs-params">()</span> &#123;<br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> currentMillis = millis();  <span class="hljs-comment">// 读取当前时间</span><br><span class="hljs-comment">// 连接MQTT服务器</span><br>  <span class="hljs-keyword">if</span> (!mqttClient.connected())  <span class="hljs-comment">// 如果未连接</span><br>  &#123;<br>    <span class="hljs-keyword">if</span> (currentMillis - previousConnectMillis &gt; intervalConnectMillis) &#123;<br>      previousConnectMillis = currentMillis;<br>      <span class="hljs-keyword">if</span> (mqttClient.connect(mqtt_client_id, mqtt_username, mqtt_password)) &#123;  <span class="hljs-comment">// 尝试连接服务器</span><br>         <span class="hljs-comment">//使用大括号现在临时变量的使用范围</span><br>         &#123;<br><br>           <span class="hljs-comment">//光照度</span><br>          String lightConfig  = generateHAConfig(<span class="hljs-string">&quot;光照传感器&quot;</span>, mqtt_ha_light_state_topic, <span class="hljs-string">&quot;Light01FB&quot;</span>, <span class="hljs-string">&quot;Lux&quot;</span>, nullptr, <span class="hljs-string">&quot;01FB&quot;</span>, <span class="hljs-string">&quot;Light&quot;</span>);<br>          mqttClient.publish(mqtt_ha_light_config_topic,lightConfig.c_str());  <span class="hljs-comment">// 连接成功后可以发送消息</span><br>          lightConfig = <span class="hljs-string">&quot;&quot;</span>;<span class="hljs-comment">//清空内存</span><br>          <span class="hljs-comment">//TOVC</span><br>          String airTOVCConfig = generateHAConfig(<span class="hljs-string">&quot;TOVC&quot;</span>, mqtt_ha_air_state_topic, <span class="hljs-string">&quot;Air01FA&quot;</span>, <span class="hljs-string">&quot;mg/m³&quot;</span>, <span class="hljs-string">&quot;&#123;&#123; value_json.tovc&#125;&#125;&quot;</span>, <span class="hljs-string">&quot;01FA&quot;</span>, <span class="hljs-string">&quot;Air&quot;</span>);<br>          mqttClient.publish(mqtt_ha_air_tovc_config_topic,airTOVCConfig.c_str());  <span class="hljs-comment">// 连接成功后可以发送消息</span><br>          airTOVCConfig = <span class="hljs-string">&quot;&quot;</span>;<span class="hljs-comment">//清空内存</span><br>          <span class="hljs-comment">//CH20</span><br>          String airCH2OConfig = generateHAConfig(<span class="hljs-string">&quot;CH2O&quot;</span>, mqtt_ha_air_state_topic, <span class="hljs-string">&quot;Air01F9&quot;</span>, <span class="hljs-string">&quot;mg/m³&quot;</span>, <span class="hljs-string">&quot;&#123;&#123; value_json.ch2o&#125;&#125;&quot;</span>, <span class="hljs-string">&quot;01F9&quot;</span>, <span class="hljs-string">&quot;Air&quot;</span>);<br>          mqttClient.publish(mqtt_ha_air_ch2o_config_topic,airCH2OConfig.c_str());  <span class="hljs-comment">// 连接成功后可以发送消息</span><br>          airCH2OConfig = <span class="hljs-string">&quot;&quot;</span>;<span class="hljs-comment">//清空内存</span><br>          <span class="hljs-comment">//CO2</span><br>          String airCO2Config = generateHAConfig(<span class="hljs-string">&quot;CO2&quot;</span>, mqtt_ha_air_state_topic, <span class="hljs-string">&quot;Air01F8&quot;</span>, <span class="hljs-string">&quot;ppm&quot;</span>, <span class="hljs-string">&quot;&#123;&#123; value_json.co2&#125;&#125;&quot;</span>, <span class="hljs-string">&quot;01F8&quot;</span>, <span class="hljs-string">&quot;Air&quot;</span>);<br>          mqttClient.publish(mqtt_ha_air_co2_config_topic,airCO2Config.c_str());  <span class="hljs-comment">// 连接成功后可以发送消息</span><br>          airCO2Config = <span class="hljs-string">&quot;&quot;</span>;<span class="hljs-comment">//清空内存</span><br>          Serial.println(<span class="hljs-string">&quot;MQTT连接成功,配置信息已发送至HA.&quot;</span>);<br><br>         &#125;<br><br>      &#125;<br>    &#125;<br>  &#125;<br><br>  <span class="hljs-comment">// 定期发送消息</span><br>  <span class="hljs-keyword">if</span> (mqttClient.connected()) &#123;<br>    <span class="hljs-keyword">if</span> (currentMillis - previousPublishMillis &gt;= intervalPublishMillis)  <span class="hljs-comment">// 如果和前次时间大于等于时间间隔</span><br>    &#123;<br>      previousPublishMillis = currentMillis;<br><br>     <span class="hljs-comment">//同理,使用大括号现在临时变量的声明周期</span><br>      &#123;<br>        <span class="hljs-keyword">if</span> (lightMeter.measurementReady()) &#123;<br>          <span class="hljs-type">float</span> lux = lightMeter.readLightLevel();<br>          <span class="hljs-comment">//Serial.printf(&quot;Light: %f Lux\n&quot;,lux);</span><br>          <span class="hljs-comment">//发送信息</span><br>          mqttClient.publish(mqtt_ha_light_state_topic, String(lux).c_str()); <br>        &#125;<br><br>        String airString = generateAirJson();<br>        <span class="hljs-comment">//Serial.printf(&quot;Air Json: %s \n&quot;,airString);</span><br>        mqttClient.publish(mqtt_ha_air_state_topic, airString.c_str());<br>        airString = <span class="hljs-string">&quot;&quot;</span>;<br>      &#125;<br><br>    &#125;<br>  &#125;<br><br>  <span class="hljs-comment">// if (lightMeter.measurementReady()) &#123;</span><br>  <span class="hljs-comment">//   float lux = lightMeter.readLightLevel();</span><br>  <span class="hljs-comment">//   Serial.print(&quot;Light: &quot;);</span><br>  <span class="hljs-comment">//   Serial.print(lux);</span><br>  <span class="hljs-comment">//   Serial.println(&quot; lx&quot;);</span><br>  <span class="hljs-comment">// &#125;</span><br>  <span class="hljs-comment">// delay(500);</span><br><br>   <span class="hljs-keyword">if</span> (mySerial.available() &gt; <span class="hljs-number">0</span>) &#123;<br>    airData[airIndex++] = mySerial.read();<br>    <span class="hljs-keyword">if</span> (airIndex &gt;= <span class="hljs-number">9</span>) &#123;<br>      <span class="hljs-comment">//溢出，可计算数据！</span><br>      byte calculatedCRC = calculateCRC(airData, airIndex - <span class="hljs-number">1</span>);<br>      byte receivedCRC = airData[airIndex - <span class="hljs-number">1</span>];<br>      <span class="hljs-comment">//Serial.printf(&quot;calculatedCRC = %02X,receivedCRC = %02X&quot;,calculatedCRC,receivedCRC);</span><br>      <span class="hljs-comment">// 验证CRC校验值</span><br>      <span class="hljs-keyword">if</span> (calculatedCRC == receivedCRC) &#123;<br>        <span class="hljs-comment">// 提取TVOC数据</span><br>        tvoc = ((airData[<span class="hljs-number">2</span>] &lt;&lt; <span class="hljs-number">8</span>) | airData[<span class="hljs-number">3</span>]) * <span class="hljs-number">0.001</span>;<br>        <span class="hljs-comment">// 提取CH₂O数据</span><br>        ch2o = ((airData[<span class="hljs-number">4</span>] &lt;&lt; <span class="hljs-number">8</span>) | airData[<span class="hljs-number">5</span>]) * <span class="hljs-number">0.001</span>;<br>        <span class="hljs-comment">// 提取CO₂数据</span><br>        co2 = (airData[<span class="hljs-number">6</span>] &lt;&lt; <span class="hljs-number">8</span>) | airData[<span class="hljs-number">7</span>];<br>        <span class="hljs-comment">//Serial.printf(&quot;TVOC:%lf,CH20:%lf,co2:%ld&quot;,tvoc,ch2o,co2);</span><br>        <span class="hljs-comment">// // 输出解析结果</span><br>        <span class="hljs-comment">// Serial.print(&quot;TVOC: &quot;);</span><br>        <span class="hljs-comment">// Serial.print(tvoc);</span><br>        <span class="hljs-comment">// Serial.println(&quot; ppb&quot;);</span><br><br>        <span class="hljs-comment">// Serial.print(&quot;CH₂O: &quot;);</span><br>        <span class="hljs-comment">// Serial.print(ch2o);</span><br>        <span class="hljs-comment">// Serial.println(&quot; ppm&quot;);</span><br><br>        <span class="hljs-comment">// Serial.print(&quot;CO₂: &quot;);</span><br>        <span class="hljs-comment">// Serial.print(co2);</span><br>        <span class="hljs-comment">// Serial.println(&quot; ppm&quot;);</span><br>        <span class="hljs-comment">// Serial.println();</span><br>      &#125; <span class="hljs-keyword">else</span> &#123;<br><br><br>        Serial.println(<span class="hljs-string">&quot;CRC check failed!&quot;</span>);<br>      &#125;<br><br>      airIndex = <span class="hljs-number">0</span>;<span class="hljs-comment">//置空</span><br>    &#125;<br>    <span class="hljs-comment">// 使用格式化输出保证每个字节以两位十六进制数显示</span><br>    <span class="hljs-comment">//Serial.printf(&quot;%02X &quot;, airData[airIndex]);</span><br>  &#125;<br><br>    <span class="hljs-comment">// 处理MQTT事务</span><br>  mqttClient.loop();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>至此，空气传感器，继电器，光照传感器到这里就结束啦。</p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/ESP8266/" class="category-chain-item">ESP8266</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/ESP8266/ESP32/" class="category-chain-item">ESP32</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/ESP8266/ESP32/HomeAssistant/" class="category-chain-item">HomeAssistant</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/ESP8266/ESP32/HomeAssistant/%E4%BB%A3%E7%A0%81%E8%AE%B0%E5%BD%95/" class="category-chain-item">代码记录</a>
+  
+  
+
+  
+
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91%E7%B3%BB%E5%88%97/" class="print-no-link">#物联网系列</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>ESP读取空气质量、光照、控制继电器</div>
+      <div>https://lqzhi.github.io/2025/04/19/ESP读取空气质量、光照、控制继电器/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>LQZHI</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年4月19日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/04/27/%E5%88%9D%E5%AD%A6OpenCV/" title="关于Opencv的学习">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">关于Opencv的学习</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/11/20/%E6%90%AD%E5%BB%BA%E4%B8%80%E4%BB%BD%E5%B1%9E%E4%BA%8E%E4%BD%A0%E7%9A%84%E5%8D%9A%E5%AE%A2%E5%90%A7/" title="搭建一份属于你的博客吧">
+                        <span class="hidden-mobile">搭建一份属于你的博客吧</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
