@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>进化吧,我的打印机!</title>
+    <link href="/2025/05/25/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/"/>
+    <url>/2025/05/25/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/</url>
+    
+    <content type="html"><![CDATA[<h4 id="进化吧-我的打印机"><a href="#进化吧-我的打印机" class="headerlink" title="进化吧,我的打印机!"></a>进化吧,我的打印机!</h4><blockquote><p>前言</p></blockquote><p>&emsp;&emsp;最近把宿舍整理了一下，把打印机从写字桌上挪开了，因为它实在是太占地方了，而且使用的频率不是很大，但是呢，没有打印机很明显又是不行的，所以我的想个法子让我的打印机Cannon佳能MG2400能够通过无线的方式去进行打印。<br>&emsp;&emsp;但是呢，这个垃圾打印机又不能支持无线打印(<del>骂它垃圾打印机是因为它墨盒比打印机贵！敲！不能贪便宜啊</del>)，这个时候，我发现了我的另外一台吃灰的东西，就是<strong>香橙派3B</strong>。(PS:别买香橙派，我第一次买香橙派3B，就烧网口了，而且硬件那边有时候有点问题，官方不作为，造出来就不管了，再也不买了！！！)<br>&emsp;&emsp;所以呢，我就把我的打印机通过USB口连接到了吃灰香橙派3B上，然后利用香橙派去进行执行打印操作，而我的主力电脑，就只要发指令就好啦！<br>&emsp;&emsp;经过我的仔细搜索，我发现了Linux打印机的核心出装是<strong>cups</strong>，一个开源的打印系统，它可以让你通过网络连接打印机，然后通过Linux系统去进行打印操作。<br>&emsp;&emsp;所以呢，我们第一步，就是得需要安装CUPS。<br>&emsp;&emsp;需要注意的是，安装CUPS的前提得安装好对应的打印机驱动。&#x3D;-&#x3D;，这个因为每个人的打印机型号不一样，这里就不一一列举了怎么去装驱动了。<br>&emsp;&emsp;在这里，我得感谢这个大佬的分享，他的分享链接如下:<br>大佬的分享，他的分享链接如下:<br><a href="https://blog.inyes.net/index.php/archives/32/">https://blog.inyes.net/index.php/archives/32/</a><br>&emsp;&emsp;这个博客里面提供了一个佳能(Canon)的打印机驱动列表，可以在里面找到对应的打印机驱动：<br>佳能驱动:<br><a href="http://gimp-print.sourceforge.net/p_Supported_Printers.php">http://gimp-print.sourceforge.net/p_Supported_Printers.php</a><br>&emsp;&emsp;好了，废话不多说，直接开始上教程！</p><blockquote><p>正文</p></blockquote><p>&emsp;&emsp;1.安装CUPS:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt-get update<br><span class="hljs-built_in">sudo</span> apt-get install cups<br></code></pre></td></tr></table></figure><p>&emsp;&emsp;2.安装佳能(Canon)打印机驱动:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt-get install printer-driver-gutenprint<br></code></pre></td></tr></table></figure><p>&emsp;&emsp;2.【惠普打印机】:安装惠普打印机驱动:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt-get install hplib*<br></code></pre></td></tr></table></figure><p>&emsp;&emsp;3.修改cups的配置文件:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> nano /etc/cups/cupsd.conf<br></code></pre></td></tr></table></figure><p>&emsp;&emsp;修改文件的以下内容：</p><ol><li>修改Listen行，将其值改为0.0.0.0:631，这将允许所有用户访问CUPS服务器。</li><li>修改Browsing行，将其值改为No，这将允许所有用户浏览CUPS服务器。</li><li>在 Location 和 Location &#x2F;admin 和 Location &#x2F;admin&#x2F;conf ，以允许所有用户访问CUPS服务器的管理界面。（追加Allow all）</li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># Listen on all interfaces</span><br>Listen 0.0.0.0:631<br><span class="hljs-comment"># Allow all users to access the server</span><br>Browsing No<br><br><span class="hljs-comment"># Allow all users to administer the server</span><br>&lt;Location /&gt;<br>  Order allow,deny<br>  Allow all<br>&lt;/Location&gt;<br>&lt;Location /admin&gt;<br>  Order allow,deny<br>  Allow all<br>&lt;/Location&gt;<br>&lt;Location /admin/conf&gt;<br>  AuthType Default<br>  Require user @SYSTEM<br>  Order allow,deny<br>  Allow all<br>&lt;/Location&gt;<br></code></pre></td></tr></table></figure><p>&emsp;&emsp;4.将当前用户追加到CUPS组中(<strong>重要,不然无法添加打印机</strong>):</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> usermod -a -G lpadmin <span class="hljs-variable">$USER</span><br></code></pre></td></tr></table></figure><p>&emsp;&emsp;5.运行任意远程进行控制CUPS服务:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> cupsctl --remote-any<br></code></pre></td></tr></table></figure><p>&emsp;&emsp;6.重启CUPS服务:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> systemctl restart cups<br></code></pre></td></tr></table></figure><p>&emsp;&emsp;7.添加打印机：</p><ol><li>进入网站：<a href="http://ip:631/">http://IP:631</a></li><li>在Administration页面中，点击Add Printer按钮。(<strong>用户名和密码就用linux的即可</strong>)</li></ol><p><img src="/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/1.webp"></p><ol start="3"><li>在Add Printer页面中，选择对应的打印机，因为我是插着USB口的，所以我这里选本地的Canon MG2400。</li></ol><p><img src="/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/2.webp"></p><ol start="4"><li>勾选Share this printer，然后点击 Continue 按钮。</li></ol><p><img src="/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/3.webp"></p><ol start="5"><li>在Model选项卡中选择对应的打印机驱动，点击Add<br>Printer按钮即可添加。</li></ol><p><img src="/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/4.webp"></p><ol start="6"><li><p>（因为我设置过了，所以我这边无法再次截图）添加完成后会弹出一个默认的设置，可以根据自己的需要进行设置，也可以直接使用默认设置即可。</p></li><li><p>在Printers页面中，可以查看到对应的情况。 需要注意的是，在这个页面的链接，待会后面会用到，例如，我的链接：<a href="https://ip地址:631/printers/Canon_MG2400_series">https://IP地址:631/printers/Canon_MG2400_series</a></p></li></ol><p><img src="/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/5.webp"></p><p>&emsp;&emsp;8. 配置Windows打印机驱动，演示windows11系统：</p><ol><li>按下win键后，直接搜索打印机</li></ol><p><img src="/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/6.webp"></p><ol start="2"><li>在打印机设置中，添加打印机，在搜索一会后，会出现手动添加新设备，点击手动添加新设备</li></ol><p><img src="/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/7.webp"><br><img src="/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/8.webp"></p><ol start="3"><li>在添加新设备中，选择<strong>使用IP地址和主机名添加打印机</strong>,再点击下一步</li></ol><p><img src="/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/9.webp"></p><p>4.选择IPP，然后在链接输入的是在Printers页面的链接，上面已经说明，再点击下一步</p><p><img src="/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/10.webp"></p><p>5.添加完成，打印测试页试一试吧。</p><blockquote><p>结尾</p></blockquote><p>&emsp;&emsp;好了，到这里，我们就完成了打印机的无线打印，是不是很简单呢？<br>&emsp;&emsp;但是现在还有个问题，就是我这是打印和扫描一体的，cpus只能打印，那么扫描呢？ 这里，因为我还在摸索中，此处就不写了，而且时间也很晚了，但是我得把会用到的技术得提前说一下：sane</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>其它技能点</category>
+      
+      <category>Linux打印机</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>物联网系列</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>关于Opencv的学习</title>
     <link href="/2025/04/27/%E5%88%9D%E5%AD%A6OpenCV/"/>
     <url>/2025/04/27/%E5%88%9D%E5%AD%A6OpenCV/</url>
@@ -13,18 +40,16 @@
     
     <categories>
       
-      <category>Opencv</category>
-      
       <category>计算机视觉</category>
       
-      <category>Python</category>
+      <category>Opencv</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>计算机视觉 Opencv Python</tag>
+      <tag>计算机视觉</tag>
       
     </tags>
     
@@ -42,13 +67,9 @@
     
     <categories>
       
+      <category>硬件开发</category>
+      
       <category>ESP8266</category>
-      
-      <category>ESP32</category>
-      
-      <category>HomeAssistant</category>
-      
-      <category>代码记录</category>
       
     </categories>
     
@@ -73,14 +94,16 @@
     
     <categories>
       
-      <category>博客</category>
+      <category>其它技能点</category>
+      
+      <category>博客搭建</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>Blog</tag>
+      <tag>博客</tag>
       
     </tags>
     
@@ -398,7 +421,9 @@
     
     <categories>
       
-      <category>Java</category>
+      <category>其它技能点</category>
+      
+      <category>环境搭建</category>
       
     </categories>
     
@@ -423,14 +448,16 @@
     
     <categories>
       
-      <category>集成开发环境</category>
+      <category>其它技能点</category>
+      
+      <category>环境搭建</category>
       
     </categories>
     
     
     <tags>
       
-      <tag>软件使用</tag>
+      <tag>环境搭建</tag>
       
     </tags>
     
@@ -448,10 +475,16 @@
     
     <categories>
       
-      <category>Me</category>
+      <category>杂谈</category>
       
     </categories>
     
+    
+    <tags>
+      
+      <tag>杂谈</tag>
+      
+    </tags>
     
   </entry>
   

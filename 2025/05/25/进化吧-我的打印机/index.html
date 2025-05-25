@@ -1,0 +1,752 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/page/favicon.png">
+  <link rel="icon" href="/img/page/favicon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="LQZHI">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="进化吧,我的打印机! 前言  &emsp;&emsp;最近把宿舍整理了一下，把打印机从写字桌上挪开了，因为它实在是太占地方了，而且使用的频率不是很大，但是呢，没有打印机很明显又是不行的，所以我的想个法子让我的打印机Cannon佳能MG2400能够通过无线的方式去进行打印。&emsp;&emsp;但是呢，这个垃圾打印机又不能支持无线打印(骂它垃圾打印机是因为它墨盒比打印机贵！敲！不能贪便宜啊)，这个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="进化吧,我的打印机!">
+<meta property="og:url" content="https://lqzhi.github.io/2025/05/25/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/index.html">
+<meta property="og:site_name" content="闻言的小站">
+<meta property="og:description" content="进化吧,我的打印机! 前言  &emsp;&emsp;最近把宿舍整理了一下，把打印机从写字桌上挪开了，因为它实在是太占地方了，而且使用的频率不是很大，但是呢，没有打印机很明显又是不行的，所以我的想个法子让我的打印机Cannon佳能MG2400能够通过无线的方式去进行打印。&emsp;&emsp;但是呢，这个垃圾打印机又不能支持无线打印(骂它垃圾打印机是因为它墨盒比打印机贵！敲！不能贪便宜啊)，这个">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/1.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/2.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/3.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/4.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/5.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/6.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/7.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/8.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/9.webp">
+<meta property="og:image" content="https://lqzhi.github.io/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/10.webp">
+<meta property="article:published_time" content="2025-05-25T14:31:03.000Z">
+<meta property="article:modified_time" content="2025-05-25T15:47:46.093Z">
+<meta property="article:author" content="LQZHI">
+<meta property="article:tag" content="物联网系列">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lqzhi.github.io/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/1.webp">
+  
+  
+  
+  <title>进化吧,我的打印机! - 闻言的小站</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"lqzhi.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>闻言的笔记本</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/page/Page.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="进化吧,我的打印机!"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-05-25 22:31" pubdate>
+          2025年5月25日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          11 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">进化吧,我的打印机!</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2025年5月25日 晚上
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h4 id="进化吧-我的打印机"><a href="#进化吧-我的打印机" class="headerlink" title="进化吧,我的打印机!"></a>进化吧,我的打印机!</h4><blockquote>
+<p>前言</p>
+</blockquote>
+<p>&emsp;&emsp;最近把宿舍整理了一下，把打印机从写字桌上挪开了，因为它实在是太占地方了，而且使用的频率不是很大，但是呢，没有打印机很明显又是不行的，所以我的想个法子让我的打印机Cannon佳能MG2400能够通过无线的方式去进行打印。<br>&emsp;&emsp;但是呢，这个垃圾打印机又不能支持无线打印(<del>骂它垃圾打印机是因为它墨盒比打印机贵！敲！不能贪便宜啊</del>)，这个时候，我发现了我的另外一台吃灰的东西，就是<strong>香橙派3B</strong>。(PS:别买香橙派，我第一次买香橙派3B，就烧网口了，而且硬件那边有时候有点问题，官方不作为，造出来就不管了，再也不买了！！！)<br>&emsp;&emsp;所以呢，我就把我的打印机通过USB口连接到了吃灰香橙派3B上，然后利用香橙派去进行执行打印操作，而我的主力电脑，就只要发指令就好啦！<br>&emsp;&emsp;经过我的仔细搜索，我发现了Linux打印机的核心出装是<strong>cups</strong>，一个开源的打印系统，它可以让你通过网络连接打印机，然后通过Linux系统去进行打印操作。<br>&emsp;&emsp;所以呢，我们第一步，就是得需要安装CUPS。<br>&emsp;&emsp;需要注意的是，安装CUPS的前提得安装好对应的打印机驱动。&#x3D;-&#x3D;，这个因为每个人的打印机型号不一样，这里就不一一列举了怎么去装驱动了。<br>&emsp;&emsp;在这里，我得感谢这个大佬的分享，他的分享链接如下:<br>大佬的分享，他的分享链接如下:<br><a target="_blank" rel="noopener" href="https://blog.inyes.net/index.php/archives/32/">https://blog.inyes.net/index.php/archives/32/</a><br>&emsp;&emsp;这个博客里面提供了一个佳能(Canon)的打印机驱动列表，可以在里面找到对应的打印机驱动：<br>佳能驱动:<br><a target="_blank" rel="noopener" href="http://gimp-print.sourceforge.net/p_Supported_Printers.php">http://gimp-print.sourceforge.net/p_Supported_Printers.php</a><br>&emsp;&emsp;好了，废话不多说，直接开始上教程！</p>
+<blockquote>
+<p>正文</p>
+</blockquote>
+<p>&emsp;&emsp;1.安装CUPS:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt-get update<br><span class="hljs-built_in">sudo</span> apt-get install cups<br></code></pre></td></tr></table></figure>
+<p>&emsp;&emsp;2.安装佳能(Canon)打印机驱动:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt-get install printer-driver-gutenprint<br></code></pre></td></tr></table></figure>
+<p>&emsp;&emsp;2.【惠普打印机】:安装惠普打印机驱动:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt-get install hplib*<br></code></pre></td></tr></table></figure>
+<p>&emsp;&emsp;3.修改cups的配置文件:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> nano /etc/cups/cupsd.conf<br></code></pre></td></tr></table></figure>
+<p>&emsp;&emsp;修改文件的以下内容：</p>
+<ol>
+<li>修改Listen行，将其值改为0.0.0.0:631，这将允许所有用户访问CUPS服务器。</li>
+<li>修改Browsing行，将其值改为No，这将允许所有用户浏览CUPS服务器。</li>
+<li>在 Location 和 Location &#x2F;admin 和 Location &#x2F;admin&#x2F;conf ，以允许所有用户访问CUPS服务器的管理界面。（追加Allow all）</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># Listen on all interfaces</span><br>Listen 0.0.0.0:631<br><span class="hljs-comment"># Allow all users to access the server</span><br>Browsing No<br><br><span class="hljs-comment"># Allow all users to administer the server</span><br>&lt;Location /&gt;<br>  Order allow,deny<br>  Allow all<br>&lt;/Location&gt;<br>&lt;Location /admin&gt;<br>  Order allow,deny<br>  Allow all<br>&lt;/Location&gt;<br>&lt;Location /admin/conf&gt;<br>  AuthType Default<br>  Require user @SYSTEM<br>  Order allow,deny<br>  Allow all<br>&lt;/Location&gt;<br></code></pre></td></tr></table></figure>
+<p>&emsp;&emsp;4.将当前用户追加到CUPS组中(<strong>重要,不然无法添加打印机</strong>):</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> usermod -a -G lpadmin <span class="hljs-variable">$USER</span><br></code></pre></td></tr></table></figure>
+<p>&emsp;&emsp;5.运行任意远程进行控制CUPS服务:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> cupsctl --remote-any<br></code></pre></td></tr></table></figure>
+<p>&emsp;&emsp;6.重启CUPS服务:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> systemctl restart cups<br></code></pre></td></tr></table></figure>
+<p>&emsp;&emsp;7.添加打印机：</p>
+<ol>
+<li>进入网站：<a target="_blank" rel="noopener" href="http://ip:631/">http://IP:631</a></li>
+<li>在Administration页面中，点击Add Printer按钮。(<strong>用户名和密码就用linux的即可</strong>)</li>
+</ol>
+<p><img src="/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/1.webp" srcset="/img/loading.gif" lazyload></p>
+<ol start="3">
+<li>在Add Printer页面中，选择对应的打印机，因为我是插着USB口的，所以我这里选本地的Canon MG2400。</li>
+</ol>
+<p><img src="/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/2.webp" srcset="/img/loading.gif" lazyload></p>
+<ol start="4">
+<li>勾选Share this printer，然后点击 Continue 按钮。</li>
+</ol>
+<p><img src="/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/3.webp" srcset="/img/loading.gif" lazyload></p>
+<ol start="5">
+<li>在Model选项卡中选择对应的打印机驱动，点击Add<br>Printer按钮即可添加。</li>
+</ol>
+<p><img src="/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/4.webp" srcset="/img/loading.gif" lazyload></p>
+<ol start="6">
+<li><p>（因为我设置过了，所以我这边无法再次截图）添加完成后会弹出一个默认的设置，可以根据自己的需要进行设置，也可以直接使用默认设置即可。</p>
+</li>
+<li><p>在Printers页面中，可以查看到对应的情况。 需要注意的是，在这个页面的链接，待会后面会用到，例如，我的链接：<a target="_blank" rel="noopener" href="https://ip地址:631/printers/Canon_MG2400_series">https://IP地址:631/printers/Canon_MG2400_series</a></p>
+</li>
+</ol>
+<p><img src="/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/5.webp" srcset="/img/loading.gif" lazyload></p>
+<p>&emsp;&emsp;8. 配置Windows打印机驱动，演示windows11系统：</p>
+<ol>
+<li>按下win键后，直接搜索打印机</li>
+</ol>
+<p><img src="/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/6.webp" srcset="/img/loading.gif" lazyload></p>
+<ol start="2">
+<li>在打印机设置中，添加打印机，在搜索一会后，会出现手动添加新设备，点击手动添加新设备</li>
+</ol>
+<p><img src="/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/7.webp" srcset="/img/loading.gif" lazyload><br><img src="/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/8.webp" srcset="/img/loading.gif" lazyload></p>
+<ol start="3">
+<li>在添加新设备中，选择<strong>使用IP地址和主机名添加打印机</strong>,再点击下一步</li>
+</ol>
+<p><img src="/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/9.webp" srcset="/img/loading.gif" lazyload></p>
+<p>4.选择IPP，然后在链接输入的是在Printers页面的链接，上面已经说明，再点击下一步</p>
+<p><img src="/img/docs/%E8%BF%9B%E5%8C%96%E5%90%A7-%E6%88%91%E7%9A%84%E6%89%93%E5%8D%B0%E6%9C%BA/10.webp" srcset="/img/loading.gif" lazyload></p>
+<p>5.添加完成，打印测试页试一试吧。</p>
+<blockquote>
+<p>结尾</p>
+</blockquote>
+<p>&emsp;&emsp;好了，到这里，我们就完成了打印机的无线打印，是不是很简单呢？<br>&emsp;&emsp;但是现在还有个问题，就是我这是打印和扫描一体的，cpus只能打印，那么扫描呢？ 这里，因为我还在摸索中，此处就不写了，而且时间也很晚了，但是我得把会用到的技术得提前说一下：sane</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%85%B6%E5%AE%83%E6%8A%80%E8%83%BD%E7%82%B9/" class="category-chain-item">其它技能点</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E5%85%B6%E5%AE%83%E6%8A%80%E8%83%BD%E7%82%B9/Linux%E6%89%93%E5%8D%B0%E6%9C%BA/" class="category-chain-item">Linux打印机</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91%E7%B3%BB%E5%88%97/" class="print-no-link">#物联网系列</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>进化吧,我的打印机!</div>
+      <div>https://lqzhi.github.io/2025/05/25/进化吧-我的打印机/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>LQZHI</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年5月25日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/04/27/%E5%88%9D%E5%AD%A6OpenCV/" title="关于Opencv的学习">
+                        <span class="hidden-mobile">关于Opencv的学习</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
